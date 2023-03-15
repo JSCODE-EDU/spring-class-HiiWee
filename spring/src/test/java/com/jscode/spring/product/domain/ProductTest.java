@@ -14,4 +14,5 @@ class ProductTest {
 
         assertThat(product.contains(1L)).isTrue();
     }
+
 }

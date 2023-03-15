@@ -1,8 +1,11 @@
 package com.jscode.spring.product.controller;
 
 import com.jscode.spring.product.dto.NewProductRequest;
+import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +23,20 @@ public class ProductController {
     }
 
     /**
-     * (연습문제) 상품 등록 api 역할 구분하기
+     * (연습문제) 상품 등록 api
      */
     @PostMapping("/products")
     public String saveProduct(@RequestBody final NewProductRequest newProductRequest) {
-        log.info("call");
         Long generatedId = productService.saveProduct(newProductRequest);
         return String.valueOf(generatedId);
+    }
+
+    /**
+     * (연습문제) 상품 조회 api
+     */
+    @GetMapping("/products/{productId}")
+    public ProductResponse product(@PathVariable final Long productId) {
+        return productService.findProductUsdPrice(productId);
     }
 
 }
