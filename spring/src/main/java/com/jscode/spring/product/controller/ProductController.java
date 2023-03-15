@@ -1,6 +1,7 @@
 package com.jscode.spring.product.controller;
 
 import com.jscode.spring.product.dto.NewProductRequest;
+import com.jscode.spring.product.dto.ProductListResponse;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +36,15 @@ public class ProductController {
      * (연습문제) 상품 조회 api
      */
     @GetMapping("/products/{productId}")
-    public ProductResponse product(@PathVariable final Long productId) {
+    public ProductResponse findProduct(@PathVariable final Long productId) {
         return productService.findProductUsdPrice(productId);
     }
 
+    /**
+     * (연습문제) 전체 상품 조회
+     */
+    @GetMapping("/products")
+    public ProductListResponse findProducts() {
+        return productService.findAllProduct();
+    }
 }

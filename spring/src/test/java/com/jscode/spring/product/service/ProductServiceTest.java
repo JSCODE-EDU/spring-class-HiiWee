@@ -30,7 +30,6 @@ class ProductServiceTest {
                 () -> assertThat(product.getName()).isEqualTo("test"),
                 () -> assertThat(product.getPrice()).isEqualTo(3000)
         );
-
     }
 
 }
