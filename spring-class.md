@@ -13,3 +13,14 @@
 
 ### ✅ 학습 및 과제 진행
 - [RESTful API와 HTTP 프로토콜](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8-%EC%9E%85%EB%AC%B8-%EC%8A%A4%ED%84%B0%EB%94%94-1%EC%A3%BC%EC%B0%A8-2%ED%9A%8C%EC%B0%A8-API%EA%B0%9C%EB%B0%9C%EC%97%90-%EA%BC%AD-%ED%95%84%EC%9A%94%ED%95%9C-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC)
+
+<br>
+
+## 📌 [3회차] Spring Boot 프로젝트 생성하기
+### ✅ 학습 목표
+- 스프링부트로 문자열 하나를 응답하는 api를 만들 수 있다.
+
+### ✅ 학습 및 과제 진행
+- [3회차 코드](https://github.com/JSCODE-EDU/spring-class-HiiWee/blob/main/spring/src/main/java/com/jscode/spring/controller/TestController.java)
+- [3회차 블로그 정리 - [스터디] 프로젝트 생성 및 test api 구성하기(3회차)](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%84%B0%EB%94%94-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%83%9D%EC%84%B1-%EB%B0%8F-test-api-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B03%ED%9A%8C%EC%B0%A8)
+  - [추가학습 - [Java] jar 파일이란?](https://velog.io/@wpdlzhf159/Java-jar%EB%9E%80)
