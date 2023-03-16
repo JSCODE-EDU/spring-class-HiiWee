@@ -3,6 +3,7 @@ package com.jscode.spring.product.controller;
 import com.jscode.spring.product.dto.NewProductRequest;
 import com.jscode.spring.product.dto.ProductListResponse;
 import com.jscode.spring.product.dto.ProductResponse;
+import com.jscode.spring.product.dto.ProductSaveResponse;
 import com.jscode.spring.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
@@ -30,9 +31,9 @@ public class ProductController {
      * (미션 1 ) 상품 등록 api (동일상품 등록시 실패)
      */
     @PostMapping("/products")
-    public String saveProduct(@RequestBody final NewProductRequest newProductRequest) {
+    public ProductSaveResponse saveProduct(@RequestBody final NewProductRequest newProductRequest) {
         Long generatedId = productService.saveProduct(newProductRequest);
-        return String.valueOf(generatedId);
+        return new ProductSaveResponse(generatedId);
     }
 
     /**
