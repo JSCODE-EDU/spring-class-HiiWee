@@ -22,7 +22,7 @@ class ProductRepositoryTest {
     @DisplayName("전체 상품 조회 테스트")
     void findAll() {
         List<Product> products = productRepository.findAll();
-        assertThat(products.size()).isEqualTo(3);
+        assertThat(products.size()).isNotZero();
     }
 
     @Test

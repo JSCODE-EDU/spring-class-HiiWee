@@ -26,7 +26,7 @@ public class ProductRepository {
         return store.stream()
                 .filter(product -> product.contains(id))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+                .orElse(null);
     }
 
     public Long save(final Product product) {
