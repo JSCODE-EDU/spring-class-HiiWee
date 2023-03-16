@@ -16,11 +16,8 @@ public class ProductResponse {
         this.price = price;
     }
 
-    public static ProductResponse createUsdPriceResponseOf(final Product product, final double usdPrice) {
+    public static ProductResponse of(final Product product, final double usdPrice) {
         return new ProductResponse(product.getId(), product.getName(), usdPrice);
     }
 
-    public static ProductResponse createResponseFrom(final Product product) {
-        return new ProductResponse(product.getId(), product.getName(), product.getPrice());
-    }
 }

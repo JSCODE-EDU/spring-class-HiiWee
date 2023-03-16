@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jscode.spring.product.domain.Product;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,10 +32,8 @@ class ProductRepositoryTest {
     }
 
     @Test
-    @DisplayName("특정 상품 조회 실패시 예외 발생 테스트")
-    void findById_fail_withException() {
-        Assertions.assertThatThrownBy(() -> productRepository.findById(11111L))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("존재하지 않는 상품입니다.");
+    @DisplayName("특정 상품 조회 실패시 null값 반환 테스트")
+    void findById_fail_withNull() {
+        assertThat(productRepository.findById(1111111111L)).isNull();
     }
 }

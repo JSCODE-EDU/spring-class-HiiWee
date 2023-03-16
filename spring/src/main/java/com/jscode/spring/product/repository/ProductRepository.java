@@ -4,6 +4,7 @@ import com.jscode.spring.product.domain.Product;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -35,6 +36,7 @@ public class ProductRepository {
         return product.getId();
     }
 
+    // Optional로 변경
     public Product findByName(final String name) {
         return store.stream()
                 .filter(product -> product.isSameName(name))
@@ -42,5 +44,10 @@ public class ProductRepository {
                 .orElse(null);
     }
 
+    public List<Product> findAllByName(final String name) {
+        return store.stream()
+                .filter(product -> product.isSameName(name))
+                .collect(Collectors.toList());
+    }
 
 }

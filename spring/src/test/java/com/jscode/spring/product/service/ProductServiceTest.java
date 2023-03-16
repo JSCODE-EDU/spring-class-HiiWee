@@ -3,8 +3,11 @@ package com.jscode.spring.product.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.jscode.spring.exchange.service.ExchangeRatesService;
+import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
 import com.jscode.spring.product.dto.NewProductRequest;
+import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
 import com.jscode.spring.product.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
@@ -20,13 +23,16 @@ class ProductServiceTest {
     ProductService productService;
 
     @Autowired
+    ExchangeRatesService exchangeRatesService;
+
+    @Autowired
     ProductRepository productRepository;
 
     @Test
     @DisplayName("상품 저장 성공 테스트")
     void saveProduct_success() {
-        productService.saveProduct(new NewProductRequest("test", 3000));
-        Product product = productRepository.findById(4L);
+        Long id = productService.saveProduct(new NewProductRequest("test", 3000));
+        Product product = productRepository.findById(id);
 
         Assertions.assertAll(
                 () -> assertThat(product.getName()).isEqualTo("test"),
@@ -46,4 +52,36 @@ class ProductServiceTest {
                 .isInstanceOf(DuplicateNameException.class)
                 .hasMessageContaining("동일한 이름의 상품은 저장할 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("단순 상품 ID 조회")
+    void findProductById_success() {
+        Long id = productService.saveProduct(new NewProductRequest("basicTest1", 3000));
+
+        ProductResponse productById = productService.findProductById(id, null);
+
+        assertThat(productById.getPrice()).isEqualTo(3000.0);
+    }
+
+    @Test
+    @DisplayName("상품 ID 및 KRW 단위로 조회 성공 테스트")
+    void findProductById_success_withKRW_monetaryUnit() {
+        Long id = productService.saveProduct(new NewProductRequest("test1", 3000));
+
+        ProductResponse productByName = productService.findProductById(id, "KRW");
+
+        assertThat(productByName.getPrice()).isEqualTo(3000.0);
+    }
+
+    @Test
+    @DisplayName("상품 ID 및 USD 단위로 조회 성공 테스트")
+    void findProductById_success_withUSD_monetaryUnit() {
+        Long id = productService.saveProduct(new NewProductRequest("test2", 10000));
+        double usdPrice = exchangeRatesService.convertKrwTo(MonetaryUnit.USD, 10000);
+
+        ProductResponse productByName = productService.findProductById(id, "USD");
+
+        assertThat(productByName.getPrice()).isEqualTo(usdPrice);
+    }
+
 }
