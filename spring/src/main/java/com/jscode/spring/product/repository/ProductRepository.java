@@ -24,6 +24,12 @@ public class ProductRepository {
         return Collections.unmodifiableList(store);
     }
 
+    public List<Product> findAllByName(final String name) {
+        return store.stream()
+                .filter(product -> product.isSameName(name))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
     public Optional<Product> findById(final Long id) {
         return store.stream()
                 .filter(product -> product.contains(id))
@@ -40,12 +46,6 @@ public class ProductRepository {
         return store.stream()
                 .filter(product -> product.isSameName(name))
                 .findAny();
-    }
-
-    public List<Product> findAllByName(final String name) {
-        return store.stream()
-                .filter(product -> product.isSameName(name))
-                .collect(Collectors.toList());
     }
 
 }

@@ -9,6 +9,7 @@ import com.jscode.spring.product.domain.Product;
 import com.jscode.spring.product.dto.NewProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
+import com.jscode.spring.product.exception.ProductNotFoundException;
 import com.jscode.spring.product.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -39,6 +40,17 @@ class ProductServiceTest {
                 () -> assertThat(product.getPrice()).isEqualTo(3000)
         );
     }
+
+    @Test
+    @DisplayName("없는 name에 대한 전체 상품 조회 실패 테스트")
+    void findAll_fail_withInvalidName() {
+        String name = "nothing";
+
+        assertThatThrownBy(() -> productService.findAll(name, null))
+                .isInstanceOf(ProductNotFoundException.class)
+                .hasMessageContaining("존재하지 않는 상품입니다.");
+    }
+
 
     @Test
     @DisplayName("동일 이름 상품 저장시 예외 발생 테스트")
