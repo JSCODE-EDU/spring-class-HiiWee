@@ -36,7 +36,6 @@ public class ProductRepository {
         return product.getId();
     }
 
-    // Optional로 변경
     public Optional<Product> findByName(final String name) {
         return store.stream()
                 .filter(product -> product.isSameName(name))

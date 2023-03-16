@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * (미션) 조회/등록 실패할 때 응답 interface 구현
+ * (미션 3 ) 조회/등록 실패할 때 응답 interface 구현
  */
 @RestControllerAdvice
 public class ControllerAdvice {
