@@ -24,4 +24,7 @@ public class Product {
         return Objects.equals(this.id, id);
     }
 
+    public boolean isSameName(final String name) {
+        return this.name.equals(name);
+    }
 }

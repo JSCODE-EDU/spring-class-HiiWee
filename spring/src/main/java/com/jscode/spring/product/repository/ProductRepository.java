@@ -35,4 +35,12 @@ public class ProductRepository {
         return product.getId();
     }
 
+    public Product findByName(final String name) {
+        return store.stream()
+                .filter(product -> product.isSameName(name))
+                .findAny()
+                .orElse(null);
+    }
+
+
 }

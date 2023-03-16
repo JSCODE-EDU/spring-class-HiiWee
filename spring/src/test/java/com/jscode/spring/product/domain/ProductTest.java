@@ -2,17 +2,29 @@ package com.jscode.spring.product.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ProductTest {
 
+    Product product;
+
+    @BeforeEach
+    void setUp() {
+        product = new Product(1L, "test", 3000);
+    }
+
     @Test
     @DisplayName("동일 상품 id 확인")
     void contains() {
-        Product product = new Product(1L, "test", 3000);
-
         assertThat(product.contains(1L)).isTrue();
+    }
+
+    @Test
+    @DisplayName("동일 상품 이름 조회")
+    void isSameName() {
+        assertThat(product.isSameName("test")).isTrue();
     }
 
 }

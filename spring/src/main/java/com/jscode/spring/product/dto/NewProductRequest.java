@@ -9,7 +9,7 @@ public class NewProductRequest {
     private String name;
     private int price;
 
-    public NewProductRequest() {
+    private NewProductRequest() {
     }
 
     public NewProductRequest(final String name, final int price) {
@@ -17,7 +17,7 @@ public class NewProductRequest {
         this.price = price;
     }
 
-    public Product toEntity() {
+    public Product toDomain() {
         return new Product(null, name, price);
     }
 
