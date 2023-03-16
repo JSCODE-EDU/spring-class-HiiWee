@@ -28,15 +28,10 @@ public class ProductService {
 
     public Long saveProduct(final NewProductRequest newProductRequest) {
         Product product = newProductRequest.toDomain();
-        validateProductName(product);
-        return productRepository.save(product);
-    }
-
-    private void validateProductName(final Product product) {
-        Product findProduct = productRepository.findByName(product.getName());
-        if (findProduct != null) {
+        if (productRepository.findByName(product.getName()).isPresent()) {
             throw new DuplicateNameException();
         }
+        return productRepository.save(product);
     }
 
     /**
@@ -54,7 +49,8 @@ public class ProductService {
         return new ProductListResponse(createConvertedPriceProducts(monetaryUnit, products));
     }
 
-    private List<ProductResponse> createConvertedPriceProducts(final String monetaryUnit, final List<Product> products) {
+    private List<ProductResponse> createConvertedPriceProducts(final String monetaryUnit,
+                                                               final List<Product> products) {
         List<ProductResponse> productResponses = new ArrayList<>();
         for (Product product : products) {
             double convertedPrice = convertPriceKrwTo(monetaryUnit, product);
@@ -65,10 +61,8 @@ public class ProductService {
     }
 
     public ProductResponse findProductById(final Long productId, final String monetaryUnit) {
-        Product product = productRepository.findById(productId);
-        if (product == null) {
-            throw new ProductNotFoundException();
-        }
+        Product product = productRepository.findById(productId)
+                .orElseThrow(ProductNotFoundException::new);
         double convertedPrice = convertPriceKrwTo(monetaryUnit, product);
         return ProductResponse.of(product, convertedPrice);
     }

@@ -27,13 +27,13 @@ class ProductRepositoryTest {
     @Test
     @DisplayName("특정 상품 조회 성공 테스트")
     void findById_success() {
-        Product product = productRepository.findById(1L);
+        Product product = productRepository.findById(1L).get();
         assertThat(product.getId()).isEqualTo(1L);
     }
 
     @Test
     @DisplayName("특정 상품 조회 실패시 null값 반환 테스트")
     void findById_fail_withNull() {
-        assertThat(productRepository.findById(1111111111L)).isNull();
+        assertThat(productRepository.findById(1111111111L)).isEmpty();
     }
 }

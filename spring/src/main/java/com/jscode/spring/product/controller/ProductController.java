@@ -46,7 +46,7 @@ public class ProductController {
 
     /**
      * (연습문제) 전체 상품 조회 (미션) 상품 이름으로 상세조회하는 api <br>
-     * (미션) 전체 상품 조회 필터링 name, monetaryUnit
+     * (미션) 상품 상세 조회 api
      */
     @GetMapping("/products")
     public ProductListResponse findProducts(@RequestParam @Nullable final String name,

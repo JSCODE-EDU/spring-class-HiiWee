@@ -4,6 +4,7 @@ import com.jscode.spring.product.domain.Product;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
@@ -23,11 +24,10 @@ public class ProductRepository {
         return Collections.unmodifiableList(store);
     }
 
-    public Product findById(final Long id) {
+    public Optional<Product> findById(final Long id) {
         return store.stream()
                 .filter(product -> product.contains(id))
-                .findAny()
-                .orElse(null);
+                .findAny();
     }
 
     public Long save(final Product product) {
@@ -37,11 +37,10 @@ public class ProductRepository {
     }
 
     // Optional로 변경
-    public Product findByName(final String name) {
+    public Optional<Product> findByName(final String name) {
         return store.stream()
                 .filter(product -> product.isSameName(name))
-                .findAny()
-                .orElse(null);
+                .findAny();
     }
 
     public List<Product> findAllByName(final String name) {

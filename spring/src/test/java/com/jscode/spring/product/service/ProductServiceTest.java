@@ -32,7 +32,7 @@ class ProductServiceTest {
     @DisplayName("상품 저장 성공 테스트")
     void saveProduct_success() {
         Long id = productService.saveProduct(new NewProductRequest("test", 3000));
-        Product product = productRepository.findById(id);
+        Product product = productRepository.findById(id).get();
 
         Assertions.assertAll(
                 () -> assertThat(product.getName()).isEqualTo("test"),
