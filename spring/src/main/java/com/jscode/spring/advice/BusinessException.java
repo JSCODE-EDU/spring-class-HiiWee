@@ -1,4 +1,4 @@
-package com.advice;
+package com.jscode.spring.advice;
 
 public class BusinessException extends RuntimeException {
 
