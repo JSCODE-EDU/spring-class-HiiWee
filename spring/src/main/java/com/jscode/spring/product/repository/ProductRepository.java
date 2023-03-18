@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public class ProductRepository {
 
     private static final List<Product> store = new ArrayList<>();
-    private static Long id = 3L;
+    private static final AtomicLong counter = new AtomicLong(3L);
 
     static {
         store.add(new Product(1L, "컴퓨터", 3_000_000));
@@ -37,7 +38,7 @@ public class ProductRepository {
     }
 
     public Long save(final Product product) {
-        product.generateId(++id);
+        product.generateId(counter.incrementAndGet());
         store.add(product);
         return product.getId();
     }
