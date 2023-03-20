@@ -12,4 +12,8 @@ public class ProductListResponse {
         this.productResponses = productResponses;
     }
 
+    public boolean contains(final ProductResponse productResponse) {
+        return productResponses.contains(productResponse);
+    }
+
 }

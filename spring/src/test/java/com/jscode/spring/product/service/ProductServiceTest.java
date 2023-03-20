@@ -7,6 +7,7 @@ import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
 import com.jscode.spring.product.dto.NewProductRequest;
+import com.jscode.spring.product.dto.ProductListResponse;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
 import com.jscode.spring.product.exception.ProductNotFoundException;
@@ -51,6 +52,21 @@ class ProductServiceTest {
                 .hasMessageContaining("존재하지 않는 상품입니다.");
     }
 
+    @Test
+    @DisplayName("전체 상품 조회 성공 테스트")
+    void findAll_success() {
+        ProductResponse productResponse1 = ProductResponse.of(new Product(1L, "컴퓨터", 3_000_000), 3000000);
+        ProductResponse productResponse2 = ProductResponse.of(new Product(2L, "키보드", 100_000), 100000);
+        ProductResponse productResponse3 = ProductResponse.of(new Product(3L, "마우스", 50_000), 50000);
+
+        ProductListResponse products = productService.findAll(null, null);
+
+        Assertions.assertAll(
+                () -> assertThat(products.contains(productResponse1)).isTrue(),
+                () -> assertThat(products.contains(productResponse2)).isTrue(),
+                () -> assertThat(products.contains(productResponse3)).isTrue()
+        );
+    }
 
     @Test
     @DisplayName("동일 이름 상품 저장시 예외 발생 테스트")
