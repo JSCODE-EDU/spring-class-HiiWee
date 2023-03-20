@@ -24,3 +24,14 @@
 - [3회차 코드](https://github.com/JSCODE-EDU/spring-class-HiiWee/blob/main/spring/src/main/java/com/jscode/spring/controller/TestController.java)
 - [3회차 블로그 정리 - [스터디] 프로젝트 생성 및 test api 구성하기(3회차)](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%84%B0%EB%94%94-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%83%9D%EC%84%B1-%EB%B0%8F-test-api-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B03%ED%9A%8C%EC%B0%A8)
   - [추가학습 - [Java] jar 파일이란?](https://velog.io/@wpdlzhf159/Java-jar%EB%9E%80)
+
+<br>
+
+## 📌 [4회차] Controller, Service, Repository 구분하기
+### ✅ 학습 목표
+- controller, service, repository가 각각 어떤 역할을 하는지 이해한다.
+- 하나의 api를 구현할 때 controller, service, repository로 계층을 나눠서 구현할 수 있다.
+
+### ✅ 학습 및 과제 진행
+- [3회차 코드(pr)](https://github.com/JSCODE-EDU/spring-class-HiiWee/pull/3)
+- [3회차 블로그 정리 - [스터디] Controller, Service, Repository 구분하기(4회차)](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%84%B0%EB%94%94-controller-service-repository-%EA%B5%AC%EB%B6%84%ED%95%98%EA%B8%B04%ED%9A%8C%EC%B0%A8)
