@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 public class ExchangeRatesService {
 
     public static final String EXCHANGE_URL = "https://api.apilayer.com/exchangerates_data/latest?symbols=KRW&base=%s";
+
     private final ExchangeYamlRead exchangeYamlRead;
 
     public ExchangeRatesService(final ExchangeYamlRead exchangeYamlRead) {

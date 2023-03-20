@@ -18,7 +18,7 @@ class ProductTest {
     @Test
     @DisplayName("동일 상품 id 확인")
     void contains() {
-        assertThat(product.contains(1L)).isTrue();
+        assertThat(product.isSameId(1L)).isTrue();
     }
 
     @Test

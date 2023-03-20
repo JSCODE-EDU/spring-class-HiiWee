@@ -33,7 +33,7 @@ public class ProductRepository {
 
     public Optional<Product> findById(final Long id) {
         return store.stream()
-                .filter(product -> product.contains(id))
+                .filter(product -> product.isSameId(id))
                 .findAny();
     }
 

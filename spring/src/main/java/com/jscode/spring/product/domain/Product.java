@@ -20,7 +20,7 @@ public class Product {
         this.id = id;
     }
 
-    public boolean contains(final Long id) {
+    public boolean isSameId(final Long id) {
         return Objects.equals(this.id, id);
     }
 
