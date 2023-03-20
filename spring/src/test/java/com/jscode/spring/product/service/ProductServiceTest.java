@@ -43,16 +43,6 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("없는 name에 대한 전체 상품 조회 실패 테스트")
-    void findAll_fail_withInvalidName() {
-        String name = "nothing";
-
-        assertThatThrownBy(() -> productService.findAllByName(name, null))
-                .isInstanceOf(ProductNotFoundException.class)
-                .hasMessageContaining("존재하지 않는 상품입니다.");
-    }
-
-    @Test
     @DisplayName("전체 상품 조회 성공 테스트")
     void findAll_success() {
         ProductResponse productResponse1 = ProductResponse.of(new Product(1L, "컴퓨터", 3_000_000), 3000000);
@@ -66,6 +56,27 @@ class ProductServiceTest {
                 () -> assertThat(products.contains(productResponse2)).isTrue(),
                 () -> assertThat(products.contains(productResponse3)).isTrue()
         );
+    }
+
+    @Test
+    @DisplayName("존재하는 name에 대한 전체 상품 조회 성공")
+    void findAllByName_success() {
+        String name = "컴퓨터";
+
+        ProductListResponse productListResponse = productService.findAllByName(name, null);
+
+        assertThat(
+                productListResponse.contains(ProductResponse.of(new Product(1L, "컴퓨터", 3_000_000), 3000000))).isTrue();
+    }
+
+    @Test
+    @DisplayName("없는 name에 대한 전체 상품 조회 실패 테스트")
+    void findAllByName_fail_withInvalidName() {
+        String name = "nothing";
+
+        assertThatThrownBy(() -> productService.findAllByName(name, null))
+                .isInstanceOf(ProductNotFoundException.class)
+                .hasMessageContaining("존재하지 않는 상품입니다.");
     }
 
     @Test
