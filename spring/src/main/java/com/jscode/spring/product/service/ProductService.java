@@ -11,6 +11,7 @@ import com.jscode.spring.product.exception.ProductNotFoundException;
 import com.jscode.spring.product.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -34,18 +35,16 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    /**
-     * TODO: 테스트하기 어려운 코드
-     */
-    public ProductListResponse findAll(@Nullable final String name, @Nullable final String monetaryUnit) {
-        if (name == null) {
-            List<Product> products = productRepository.findAll();
-            return new ProductListResponse(createConvertedPriceProducts(monetaryUnit, products));
-        }
+    public ProductListResponse findAllByName(@Nullable final String name, @Nullable final String monetaryUnit) {
         List<Product> products = productRepository.findAllByName(name);
         if (products.isEmpty()) {
             throw new ProductNotFoundException();
         }
+        return new ProductListResponse(createConvertedPriceProducts(monetaryUnit, products));
+    }
+
+    public ProductListResponse findAll(final String monetaryUnit) {
+        List<Product> products = productRepository.findAll();
         return new ProductListResponse(createConvertedPriceProducts(monetaryUnit, products));
     }
 
@@ -68,7 +67,7 @@ public class ProductService {
     }
 
     private double convertPriceKrwTo(final String monetaryUnit, final Product product) {
-        if (monetaryUnit == null) {
+        if (Objects.isNull(monetaryUnit)) {
             return product.getPrice();
         }
         return exchangeRatesService.convertKrwTo(MonetaryUnit.valueOf(monetaryUnit), product.getPrice());

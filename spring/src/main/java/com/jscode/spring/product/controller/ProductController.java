@@ -5,6 +5,7 @@ import com.jscode.spring.product.dto.ProductListResponse;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.dto.ProductSaveResponse;
 import com.jscode.spring.product.service.ProductService;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +53,10 @@ public class ProductController {
     @GetMapping("/products")
     public ProductListResponse findProducts(@RequestParam @Nullable final String name,
                                             @RequestParam @Nullable final String monetaryUnit) {
-        return productService.findAll(name, monetaryUnit);
+        if (Objects.isNull(name)) {
+            return productService.findAll(monetaryUnit);
+        }
+        return productService.findAllByName(name, monetaryUnit);
     }
 
 }
