@@ -1,4 +1,4 @@
-package com.jscode.spring.test;
+package com.jscode.spring.test.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
