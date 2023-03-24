@@ -5,9 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/**
- * (미션 3 ) 조회/등록 실패할 때 응답 interface 구현
- */
 @RestControllerAdvice
 public class ControllerAdvice {
 
@@ -21,4 +18,9 @@ public class ControllerAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    ResponseEntity<ErrorResponse> handleRuntimeException() {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("서버에서 예상치 못한 오류가 발생했습니다."));
+    }
 }
