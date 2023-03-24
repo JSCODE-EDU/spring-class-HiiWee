@@ -7,18 +7,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProductRepository {
 
     private static final List<Product> store = new ArrayList<>();
-    private static final AtomicLong counter = new AtomicLong(3L);
+    private static final AtomicLong counter = new AtomicLong();
 
-    static {
-        store.add(new Product(1L, "컴퓨터", 3_000_000));
-        store.add(new Product(2L, "키보드", 100_000));
-        store.add(new Product(3L, "마우스", 50_000));
+    @PostConstruct
+    void initialize() {
+        save(new Product("컴퓨터", 3_000_000L));
+        save(new Product("키보드", 100_000L));
+        save(new Product("마우스", 50_000L));
     }
 
     public List<Product> findAll() {

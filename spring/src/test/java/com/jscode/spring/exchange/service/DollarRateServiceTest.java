@@ -17,14 +17,14 @@ class DollarRateServiceTest {
     @Test
     @DisplayName("KRW to KRW 변환 성공 테스트")
     void convertKrwToKrw_success() {
-        double convertedPrice = exchangeRatesService.convertKrwTo(MonetaryUnit.KRW, 10000);
+        double convertedPrice = exchangeRatesService.convertKrwTo(MonetaryUnit.KRW, 10000L);
         assertThat(convertedPrice).isEqualTo(10000.0);
     }
 
     @Test
     @DisplayName("KRW to USD 변환 성공 테스트")
     void convertKrwToUsd_success() {
-        double convertedPrice = exchangeRatesService.convertKrwTo(MonetaryUnit.KRW, 10000);
+        double convertedPrice = exchangeRatesService.convertKrwTo(MonetaryUnit.KRW, 10000L);
         assertThat(convertedPrice).isEqualTo(10000.0);
     }
 }

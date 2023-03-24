@@ -11,7 +11,7 @@ import com.jscode.spring.product.dto.ProductListResponse;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
 import com.jscode.spring.product.exception.ProductNotFoundException;
-import com.jscode.spring.product.repository.ProductRepository;
+import com.jscode.spring.product.repository.ProductMemoryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,13 +28,13 @@ class ProductServiceTest {
     ExchangeRatesService exchangeRatesService;
 
     @Autowired
-    ProductRepository productRepository;
+    ProductMemoryRepository productMemoryRepository;
 
     @Test
     @DisplayName("상품 저장 성공 테스트")
     void saveProduct_success() {
-        Long id = productService.saveProduct(new NewProductRequest("test", 3000));
-        Product product = productRepository.findById(id).get();
+        Long id = productService.saveProduct(new NewProductRequest("test", 3000L));
+        Product product = productMemoryRepository.findById(id).get();
 
         Assertions.assertAll(
                 () -> assertThat(product.getName()).isEqualTo("test"),
@@ -45,9 +45,9 @@ class ProductServiceTest {
     @Test
     @DisplayName("전체 상품 조회 성공 테스트")
     void findAll_success() {
-        ProductResponse productResponse1 = ProductResponse.of(new Product(1L, "컴퓨터", 3_000_000), 3000000);
-        ProductResponse productResponse2 = ProductResponse.of(new Product(2L, "키보드", 100_000), 100000);
-        ProductResponse productResponse3 = ProductResponse.of(new Product(3L, "마우스", 50_000), 50000);
+        ProductResponse productResponse1 = ProductResponse.of(new Product("컴퓨터", 3_000_000L), 3000000);
+        ProductResponse productResponse2 = ProductResponse.of(new Product("키보드", 100_000L), 100000);
+        ProductResponse productResponse3 = ProductResponse.of(new Product("마우스", 50_000L), 50000);
 
         ProductListResponse products = productService.findAll(null);
 
@@ -61,12 +61,10 @@ class ProductServiceTest {
     @Test
     @DisplayName("존재하는 name에 대한 전체 상품 조회 성공")
     void findAllByName_success() {
-        String name = "컴퓨터";
-
-        ProductListResponse productListResponse = productService.findAllByName(name, null);
+        ProductListResponse productListResponse = productService.findAllByName("컴퓨터", null);
 
         assertThat(
-                productListResponse.contains(ProductResponse.of(new Product(1L, "컴퓨터", 3_000_000), 3000000))).isTrue();
+                productListResponse.contains(ProductResponse.of(new Product("컴퓨터", 3_000_000L), 3000000))).isTrue();
     }
 
     @Test
@@ -82,8 +80,8 @@ class ProductServiceTest {
     @Test
     @DisplayName("동일 이름 상품 저장시 예외 발생 테스트")
     void saveDuplicateNameProduct_fail_withException() {
-        NewProductRequest request1 = new NewProductRequest("sameName", 3000);
-        NewProductRequest request2 = new NewProductRequest("sameName", 5000);
+        NewProductRequest request1 = new NewProductRequest("sameName", 3000L);
+        NewProductRequest request2 = new NewProductRequest("sameName", 5000L);
 
         productService.saveProduct(request1);
 
@@ -95,7 +93,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("단순 상품 ID 조회")
     void findProductById_success() {
-        Long id = productService.saveProduct(new NewProductRequest("basicTest1", 3000));
+        Long id = productService.saveProduct(new NewProductRequest("basicTest1", 3000L));
 
         ProductResponse productById = productService.findProductById(id, null);
 
@@ -105,7 +103,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품 ID 및 KRW 단위로 조회 성공 테스트")
     void findProductById_success_withKRW_monetaryUnit() {
-        Long id = productService.saveProduct(new NewProductRequest("test1", 3000));
+        Long id = productService.saveProduct(new NewProductRequest("test1", 3000L));
 
         ProductResponse productByName = productService.findProductById(id, "KRW");
 
@@ -115,8 +113,8 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품 ID 및 USD 단위로 조회 성공 테스트")
     void findProductById_success_withUSD_monetaryUnit() {
-        Long id = productService.saveProduct(new NewProductRequest("test2", 10000));
-        double usdPrice = exchangeRatesService.convertKrwTo(MonetaryUnit.USD, 10000);
+        Long id = productService.saveProduct(new NewProductRequest("test2", 10000L));
+        double usdPrice = exchangeRatesService.convertKrwTo(MonetaryUnit.USD, 10000L);
 
         ProductResponse productByName = productService.findProductById(id, "USD");
 
