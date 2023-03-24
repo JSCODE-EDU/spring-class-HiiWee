@@ -32,7 +32,8 @@ public class ProductService {
         if (productRepository.findByName(product.getName()).isPresent()) {
             throw new DuplicateNameException();
         }
-        return productRepository.save(product);
+        return productRepository.save(product)
+                .getId();
     }
 
     public ProductListResponse findAllByName(@Nullable final String name, @Nullable final String monetaryUnit) {

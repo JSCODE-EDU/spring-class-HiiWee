@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProductRepository {
+public class ProductMemoryRepository {
 
     private static final List<Product> store = new ArrayList<>();
     private static final AtomicLong counter = new AtomicLong();
