@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class ProductService {
 
     private final ExchangeRatesService exchangeRatesService;
@@ -27,6 +29,7 @@ public class ProductService {
         this.exchangeRatesService = exchangeRatesService;
     }
 
+    @Transactional
     public Long saveProduct(final NewProductRequest newProductRequest) {
         Product product = newProductRequest.toDomain();
         if (productRepository.findByName(product.getName()).isPresent()) {
@@ -36,7 +39,7 @@ public class ProductService {
                 .getId();
     }
 
-    public ProductListResponse findAllByName(@Nullable final String name, @Nullable final String monetaryUnit) {
+    public ProductListResponse findAllByName(final String name, @Nullable final String monetaryUnit) {
         List<Product> products = productRepository.findAllByName(name);
         if (products.isEmpty()) {
             throw new ProductNotFoundException();
@@ -72,6 +75,16 @@ public class ProductService {
             return product.getPrice();
         }
         return exchangeRatesService.convertKrwTo(MonetaryUnit.valueOf(monetaryUnit), product.getPrice());
+    }
+
+    public ProductListResponse findAllByPriceOrderByName(final Long price) {
+        List<Product> products = productRepository.findAllByPriceOrderByNameDesc(price);
+        return ProductListResponse.from(products);
+    }
+
+    public ProductListResponse findAllByPriceAndName(final Long price, final String name) {
+        List<Product> products = productRepository.findAllByPriceAndName(price, name);
+        return ProductListResponse.from(products);
     }
 
 }

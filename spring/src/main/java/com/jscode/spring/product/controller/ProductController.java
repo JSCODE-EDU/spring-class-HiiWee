@@ -28,6 +28,7 @@ public class ProductController {
 
     @PostMapping("/products")
     public ProductSaveResponse saveProduct(@RequestBody final NewProductRequest newProductRequest) {
+        log.info("call saveProduct");
         Long generatedId = productService.saveProduct(newProductRequest);
         return new ProductSaveResponse(generatedId);
     }
@@ -35,17 +36,20 @@ public class ProductController {
     @GetMapping("/products/{productId}")
     public ProductResponse findProductById(@PathVariable final Long productId,
                                            @RequestParam @Nullable final String monetaryUnit) {
+        log.info("call findProductById");
         return productService.findProductById(productId, monetaryUnit);
     }
 
     @GetMapping("/products")
     public ProductListResponse findProducts(@RequestParam @Nullable final String monetaryUnit) {
+        log.info("call findProducts");
         return productService.findAll(monetaryUnit);
     }
 
     @GetMapping(value = "/products", params = "name")
     public ProductListResponse findProductByQueryStringName(@RequestParam final String name,
                                                             @RequestParam @Nullable final String monetaryUnit) {
+        log.info("call findProductByQueryStringName");
         return productService.findAllByName(name, monetaryUnit);
     }
 
@@ -55,7 +59,27 @@ public class ProductController {
     @GetMapping(value = "/products", params = "id")
     public ProductResponse findProductByQueryStringId(@RequestParam final Long id,
                                                       @RequestParam @Nullable final String monetaryUnit) {
-        return productService.findProductById(id, null);
+        log.info("call findProductByQueryStringId");
+        return productService.findProductById(id, monetaryUnit);
+    }
+
+    /**
+     * (미션2) 상품 조회 메소드 구현(가격)
+     */
+    @GetMapping(value = "/products", params = "price")
+    public ProductListResponse findAllProductByPriceOrderByName(@RequestParam final Long price) {
+        log.info("call findAllProductByPriceOrderByName");
+        return productService.findAllByPriceOrderByName(price);
+    }
+
+    /**
+     * (미션2) 상품 조회 메소드 구현(이름)
+     */
+    @GetMapping(value = "/products", params = {"name", "price"})
+    public ProductListResponse findAllByPriceAndName(@RequestParam final Long price,
+                                                     @RequestParam final String name) {
+        log.info("call findAllByPriceAndName");
+        return productService.findAllByPriceAndName(price, name);
     }
 
 }
