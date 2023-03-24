@@ -49,4 +49,13 @@ public class ProductController {
         return productService.findAllByName(name, monetaryUnit);
     }
 
+    /**
+     * (미션1) 상품 상세 조회 구현
+     */
+    @GetMapping(value = "/products", params = "id")
+    public ProductResponse findProductByQueryStringId(@RequestParam final Long id,
+                                                      @RequestParam @Nullable final String monetaryUnit) {
+        return productService.findProductById(id, null);
+    }
+
 }

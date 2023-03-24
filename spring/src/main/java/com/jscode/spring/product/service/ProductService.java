@@ -44,12 +44,12 @@ public class ProductService {
         return new ProductListResponse(createConvertedPriceProducts(monetaryUnit, products));
     }
 
-    public ProductListResponse findAll(final String monetaryUnit) {
+    public ProductListResponse findAll(@Nullable final String monetaryUnit) {
         List<Product> products = productRepository.findAll();
         return new ProductListResponse(createConvertedPriceProducts(monetaryUnit, products));
     }
 
-    private List<ProductResponse> createConvertedPriceProducts(final String monetaryUnit,
+    private List<ProductResponse> createConvertedPriceProducts(@Nullable final String monetaryUnit,
                                                                final List<Product> products) {
         List<ProductResponse> productResponses = new ArrayList<>();
         for (Product product : products) {
@@ -60,7 +60,7 @@ public class ProductService {
         return productResponses;
     }
 
-    public ProductResponse findProductById(final Long productId, final String monetaryUnit) {
+    public ProductResponse findProductById(final Long productId, @Nullable final String monetaryUnit) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(ProductNotFoundException::new);
         double convertedPrice = convertPriceKrwTo(monetaryUnit, product);
