@@ -1,10 +1,12 @@
 package com.jscode.spring.advice;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@Slf4j
 @RestControllerAdvice
 public class ControllerAdvice {
 
@@ -19,7 +21,8 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    ResponseEntity<ErrorResponse> handleRuntimeException() {
+    ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException e) {
+        log.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse("서버에서 예상치 못한 오류가 발생했습니다."));
     }
