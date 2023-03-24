@@ -72,6 +72,7 @@ public class ProductController {
         return productService.findAllByPriceOrderByName(price);
     }
 
+    // TODO 묶어보기: 파라미터가 여러개가 추가되는 상황에서 컨트롤러를 분리하는것이 좋을지 한번에 처리하는것이 좋을지?
     /**
      * (미션2) 상품 조회 메소드 구현(이름)
      */

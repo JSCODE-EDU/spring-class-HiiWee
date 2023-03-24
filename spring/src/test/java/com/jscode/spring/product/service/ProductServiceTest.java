@@ -130,4 +130,29 @@ class ProductServiceTest {
         assertThat(productByName.getPrice()).isEqualTo(usdPrice);
     }
 
+    @Test
+    @DisplayName("상품 가격으로 조회시 이름 내림차순으로 조회")
+    void findAllByPriceOrderByName() {
+        Product samePriceProduct1 = new Product("samePriceProduct1", 3000L);
+        Product samePriceProduct2 = new Product("samePriceProduct2", 3000L);
+        Product samePriceProduct3 = new Product("samePriceProduct3", 3000L);
+        productRepository.save(samePriceProduct1);
+        productRepository.save(samePriceProduct2);
+        productRepository.save(samePriceProduct3);
+
+        ProductListResponse findProducts = productService.findAllByPriceOrderByName(3000L);
+
+        assertThat(findProducts.getProductResponses()).containsExactly(
+                ProductResponse.of(samePriceProduct3, 3000L),
+                ProductResponse.of(samePriceProduct2, 3000L),
+                ProductResponse.of(samePriceProduct1, 3000L)
+        );
+    }
+
+    @Test
+    @DisplayName("상품 가격, 이름으로 조회")
+    void findAllByPriceAndName() {
+        ProductListResponse products = productService.findAllByPriceAndName(3000000L, "컴퓨터");
+        assertThat(products.contains(ProductResponse.of(product1, product1.getPrice()))).isTrue();
+    }
 }
