@@ -1,6 +1,7 @@
 package com.jscode.spring.product.dto;
 
 import com.jscode.spring.product.domain.Product;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -12,6 +13,7 @@ public class ProductResponse {
     private String name;
     private double price;
 
+    @Builder
     private ProductResponse(final Long id, final String name, final double price) {
         this.id = id;
         this.name = name;

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
@@ -36,4 +35,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // 상품 가격의 평균 구하기
     @Query("SELECT avg(p.price) FROM Product p")
     Long findAveragePrice();
+
 }
