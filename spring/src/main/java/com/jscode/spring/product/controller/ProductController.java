@@ -1,7 +1,7 @@
 package com.jscode.spring.product.controller;
 
-import com.jscode.spring.product.dto.NewProductRequest;
 import com.jscode.spring.product.dto.ProductListResponse;
+import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.dto.ProductSaveResponse;
 import com.jscode.spring.product.service.ProductService;
@@ -27,9 +27,9 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ProductSaveResponse saveProduct(@RequestBody final NewProductRequest newProductRequest) {
+    public ProductSaveResponse saveProduct(@RequestBody final ProductRequest productRequest) {
         log.info("call saveProduct");
-        Long generatedId = productService.saveProduct(newProductRequest);
+        Long generatedId = productService.saveProduct(productRequest);
         return new ProductSaveResponse(generatedId);
     }
 
@@ -72,15 +72,13 @@ public class ProductController {
         return productService.findAllByPriceOrderByName(price);
     }
 
-    // TODO 묶어보기: 파라미터가 여러개가 추가되는 상황에서 컨트롤러를 분리하는것이 좋을지 한번에 처리하는것이 좋을지?
     /**
      * (미션2) 상품 조회 메소드 구현(이름)
      */
     @GetMapping(value = "/products", params = {"name", "price"})
-    public ProductListResponse findAllByPriceAndName(@RequestParam final Long price,
-                                                     @RequestParam final String name) {
+    public ProductListResponse findAllByPriceAndName(final ProductRequest productRequest) {
         log.info("call findAllByPriceAndName");
-        return productService.findAllByPriceAndName(price, name);
+        return productService.findAllByPriceAndName(productRequest);
     }
 
 }

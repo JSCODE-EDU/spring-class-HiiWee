@@ -4,15 +4,15 @@ import com.jscode.spring.product.domain.Product;
 import lombok.Getter;
 
 @Getter
-public class NewProductRequest {
+public class ProductRequest {
 
     private String name;
     private Long price;
 
-    private NewProductRequest() {
+    private ProductRequest() {
     }
 
-    public NewProductRequest(final String name, final Long price) {
+    public ProductRequest(final String name, final Long price) {
         this.name = name;
         this.price = price;
     }

@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
-import com.jscode.spring.product.dto.NewProductRequest;
 import com.jscode.spring.product.dto.ProductListResponse;
+import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
 import com.jscode.spring.product.exception.ProductNotFoundException;
@@ -50,7 +50,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품 저장 성공 테스트")
     void saveProduct_success() {
-        Long id = productService.saveProduct(new NewProductRequest("test", 3000L));
+        Long id = productService.saveProduct(new ProductRequest("test", 3000L));
         Product product = productRepository.findById(id).get();
 
         Assertions.assertAll(
@@ -94,8 +94,8 @@ class ProductServiceTest {
     @Test
     @DisplayName("동일 이름 상품 저장시 예외 발생 테스트")
     void saveDuplicateNameProduct_fail_withException() {
-        NewProductRequest request1 = new NewProductRequest("sameName", 3000L);
-        NewProductRequest request2 = new NewProductRequest("sameName", 5000L);
+        ProductRequest request1 = new ProductRequest("sameName", 3000L);
+        ProductRequest request2 = new ProductRequest("sameName", 5000L);
 
         productService.saveProduct(request1);
 
@@ -152,7 +152,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품 가격, 이름으로 조회")
     void findAllByPriceAndName() {
-        ProductListResponse products = productService.findAllByPriceAndName(3000000L, "컴퓨터");
+        ProductListResponse products = productService.findAllByPriceAndName(new ProductRequest("컴퓨터", 3000000L));
         assertThat(products.contains(ProductResponse.of(product1, product1.getPrice()))).isTrue();
     }
 }
