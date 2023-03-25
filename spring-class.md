@@ -33,5 +33,5 @@
 - 하나의 api를 구현할 때 controller, service, repository로 계층을 나눠서 구현할 수 있다.
 
 ### ✅ 학습 및 과제 진행
-- [3회차 코드(pr)](https://github.com/JSCODE-EDU/spring-class-HiiWee/pull/3)
-- [3회차 블로그 정리 - [스터디] Controller, Service, Repository 구분하기(4회차)](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%84%B0%EB%94%94-controller-service-repository-%EA%B5%AC%EB%B6%84%ED%95%98%EA%B8%B04%ED%9A%8C%EC%B0%A8)
+- [4회차 코드(pr)](https://github.com/JSCODE-EDU/spring-class-HiiWee/pull/3)
+- [4회차 블로그 정리 - [스터디] Controller, Service, Repository 구분하기(4회차)](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%84%B0%EB%94%94-controller-service-repository-%EA%B5%AC%EB%B6%84%ED%95%98%EA%B8%B04%ED%9A%8C%EC%B0%A8)
