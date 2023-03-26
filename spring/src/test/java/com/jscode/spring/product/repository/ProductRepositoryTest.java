@@ -44,7 +44,7 @@ class ProductRepositoryTest {
     @Test
     @DisplayName("가장 가격이 비싼 상품 조회하기")
     void findProductsWithMaxPrice() {
-        List<Product> products = productRepository.findProductsWithMaxPrice();
+        List<Product> products = productRepository.findAllWithMaxPrice();
 
         assertThat(products).containsOnly(product2);
     }

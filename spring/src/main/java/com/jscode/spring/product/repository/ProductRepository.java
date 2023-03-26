@@ -22,7 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // 가장 가격이 비싼 상품 조회하기
     @Query("SELECT p FROM Product p WHERE p.price = (SELECT max(sp.price) FROM Product sp )")
-    List<Product> findProductsWithMaxPrice();
+    List<Product> findAllWithMaxPrice();
 
     // 이름에 "컴"을 포함하는 상품 조회하기
     @Query("SELECT p FROM Product p WHERE p.name like :nameFormat")
