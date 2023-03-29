@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
@@ -18,7 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // 전체 상품 조회시 name이 특정 이름인 상품 무시
     @Query("SELECT p FROM Product p WHERE p.name <> :excludeName")
-    List<Product> findAllByNameExceptExcludeName(final String excludeName);
+    List<Product> findAllByNameExceptExcludeName(@Param("excludeName") final String excludeName);
 
     // 가장 가격이 비싼 상품 조회하기
     @Query("SELECT p FROM Product p WHERE p.price = (SELECT max(sp.price) FROM Product sp )")
@@ -26,7 +27,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // 이름에 "컴"을 포함하는 상품 조회하기
     @Query("SELECT p FROM Product p WHERE p.name like :nameFormat")
-    List<Product> findAllByNameIsLikeNameFormat(final String nameFormat);
+    List<Product> findAllByNameIsLikeNameFormat(@Param("nameFormat") final String nameFormat);
 
     // 가장 가격이 저렴한 상품의 이름만 조회
     @Query("SELECT p.name FROM Product p WHERE p.price = (SELECT min(sp.price) FROM Product sp)")

@@ -23,10 +23,10 @@ class ProductRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        product1 = new Product("컴퓨터사인펜", 3000L);
-        product2 = new Product("컴퓨터", 3000000L);
-        product3 = new Product("모니터", 500000L);
-        product4 = new Product("키보드", 100000L);
+        product1 = new Product("컴퓨터사인펜", 3000L, null);
+        product2 = new Product("컴퓨터", 3000000L, null);
+        product3 = new Product("모니터", 500000L, null);
+        product4 = new Product("키보드", 100000L, null);
         productRepository.save(product1);
         productRepository.save(product2);
         productRepository.save(product3);

@@ -1,5 +1,7 @@
 package com.jscode.spring.product.service;
 
+import com.jscode.spring.Store.domain.Store;
+import com.jscode.spring.Store.service.StoreService;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
@@ -21,17 +23,26 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ExchangeRatesService exchangeRatesService;
+    private final StoreService storeService;
 
     private final ProductRepository productRepository;
 
-    public ProductService(final ProductRepository productRepository, final ExchangeRatesService exchangeRatesService) {
+    public ProductService(final ProductRepository productRepository, final ExchangeRatesService exchangeRatesService,
+                          final StoreService storeService) {
         this.productRepository = productRepository;
         this.exchangeRatesService = exchangeRatesService;
+        this.storeService = storeService;
     }
 
     @Transactional
     public Long saveProduct(final ProductRequest productRequest) {
-        Product product = productRequest.toDomain();
+        Store store = storeService.findById(productRequest.getStoreId());
+        Product product = Product.builder()
+                .name(productRequest.getName())
+                .price(productRequest.getPrice())
+                .store(store)
+                .build();
+        product.registerStore(store);
         if (productRepository.findByName(product.getName()).isPresent()) {
             throw new DuplicateNameException();
         }

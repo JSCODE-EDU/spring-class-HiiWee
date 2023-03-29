@@ -36,8 +36,7 @@ public class Store {
     }
 
     @Builder
-    private Store(final Long id, final String name, final Address address, final String phone) {
-        this.id = id;
+    private Store(final String name, final Address address, final String phone) {
         this.name = name;
         this.address = address;
         this.phone = phone;

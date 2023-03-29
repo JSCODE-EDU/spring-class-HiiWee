@@ -46,7 +46,12 @@ class ProductControllerTest {
 
     @BeforeEach
     void setUp() {
-        productRequest1 = new ProductRequest("newProduct", 3000L);
+        productRequest1 = ProductRequest.builder()
+                .name("newProduct")
+                .price(3000L)
+                .storeId(1L)
+                .build();
+
         productResponse1 = ProductResponse.builder()
                 .id(1L)
                 .name("product1")
