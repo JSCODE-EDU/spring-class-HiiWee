@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class SpringDocsConfig {
 
     @Bean
-    public OpenAPI openAPI(@Value("${springdoc.version}") String version) {
+    public OpenAPI openAPI(@Value("${springdoc.swagger-ui.version}") String version) {
         Info info = new Info();
         info.title("Spring Boot Basic Study")
                 .version(version)

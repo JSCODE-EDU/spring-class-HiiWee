@@ -1,5 +1,6 @@
 package com.jscode.spring.store.domain;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import javax.persistence.Embeddable;
 import lombok.Getter;
@@ -8,7 +9,10 @@ import lombok.Getter;
 @Getter
 public class Address {
 
+    @Schema(example = "도로명")
     private String street;
+
+    @Schema(example = "상세주소")
     private String detail;
 
     protected Address() {

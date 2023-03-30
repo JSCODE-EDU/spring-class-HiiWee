@@ -1,6 +1,7 @@
 package com.jscode.spring.product.dto;
 
 import com.jscode.spring.product.domain.Product;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,9 +10,16 @@ import lombok.Getter;
 @EqualsAndHashCode(exclude = "id")
 public class ProductResponse {
 
+    @Schema(description = "상품 id", example = "1")
     private Long id;
+
+    @Schema(description = "상품 이름", example = "응답 상품 이름")
     private String name;
+
+    @Schema(description = "상품 가격", example = "3000")
     private double price;
+
+    @Schema(description = "상품이 포함된 상점 id", example = "1")
     private Long storeId;
 
     @Builder
