@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jscode.spring.store.domain.Address;
 import com.jscode.spring.store.domain.Store;
+import com.jscode.spring.store.dto.StoreResponse;
 import com.jscode.spring.store.dto.StoreSaveRequest;
 import com.jscode.spring.store.exception.StoreNotFoundException;
 import com.jscode.spring.store.repository.StoreRepository;
@@ -60,9 +61,22 @@ class StoreServiceTest {
         );
     }
 
+    @DisplayName("id를 통해 상점을 찾을 수 있다.")
+    @Test
+    void findById() {
+        StoreResponse storeResponse = storeService.findById(store.getId());
+
+        Assertions.assertAll(
+                () -> assertThat(storeResponse.getId()).isEqualTo(store.getId()),
+                () -> assertThat(storeResponse.getName()).isEqualTo(store.getName()),
+                () -> assertThat(storeResponse.getAddress()).isEqualTo(store.getAddress()),
+                () -> assertThat(storeResponse.getPhone()).isEqualTo(store.getPhone())
+        );
+    }
+
     @DisplayName("존재하지 않는 상품은 찾을 수 없다.")
     @Test
-    void findById_success() {
+    void findById_exception_notExistId() {
         assertThatThrownBy(() -> storeService.findById(111111L))
                 .isInstanceOf(StoreNotFoundException.class)
                 .hasMessageContaining("상점을 찾을 수 없습니다.");
