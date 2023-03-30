@@ -29,6 +29,7 @@ public class StoreController {
      */
     @PostMapping("/stores")
     public StoreSaveResponse saveStore(@RequestBody final StoreSaveRequest saveRequest) {
+        log.info("call saveStore");
         Long savedId = storeService.saveStore(saveRequest);
         return new StoreSaveResponse(savedId);
     }
@@ -38,6 +39,7 @@ public class StoreController {
      */
     @GetMapping("/stores")
     public StoresResponse findAll() {
+        log.info("call findAll");
         return storeService.findAll();
     }
 
@@ -46,6 +48,7 @@ public class StoreController {
      */
     @GetMapping("/stores/{storeId}")
     public StoreResponse findById(@PathVariable final Long storeId) {
+        log.info("call findById");
         return storeService.findById(storeId);
     }
 }

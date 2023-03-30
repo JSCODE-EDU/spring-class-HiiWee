@@ -15,6 +15,7 @@ import com.jscode.spring.product.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,4 +103,13 @@ public class ProductService {
         return ProductsResponse.from(products);
     }
 
+    public ProductsResponse findAllByStoreId(final Long storeId) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(StoreNotFoundException::new);
+        List<Product> products = productRepository.findAllByStore(store);
+        List<ProductResponse> productResponses = products.stream()
+                .map(ProductResponse::from)
+                .collect(Collectors.toList());
+        return new ProductsResponse(productResponses);
+    }
 }

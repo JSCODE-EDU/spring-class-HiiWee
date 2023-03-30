@@ -3,18 +3,20 @@ package com.jscode.spring.product.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jscode.spring.store.domain.Address;
-import com.jscode.spring.store.domain.Store;
-import com.jscode.spring.store.repository.StoreRepository;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
-import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
+import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
 import com.jscode.spring.product.exception.ProductNotFoundException;
 import com.jscode.spring.product.repository.ProductRepository;
+import com.jscode.spring.store.domain.Address;
+import com.jscode.spring.store.domain.Store;
+import com.jscode.spring.store.repository.StoreRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -49,7 +51,7 @@ class ProductServiceTest {
     void setUp() {
         store = Store.builder()
                 .name("상점")
-                .address(new Address("로",  "번지"))
+                .address(new Address("로", "번지"))
                 .phone("010-0000-0000")
                 .build();
         product1 = new Product("컴퓨터", 3_000_000L, store);
@@ -99,7 +101,8 @@ class ProductServiceTest {
         ProductsResponse productListResponse = productService.findAllByName("컴퓨터", null);
 
         assertThat(
-                productListResponse.contains(ProductResponse.of(new Product("컴퓨터", 3_000_000L, store), 3000000))).isTrue();
+                productListResponse.contains(
+                        ProductResponse.of(new Product("컴퓨터", 3_000_000L, store), 3000000))).isTrue();
     }
 
     @DisplayName("없는 name에 대한 전체 상품 조회 실패 테스트")
@@ -177,7 +180,23 @@ class ProductServiceTest {
     @DisplayName("상품 가격, 이름으로 조회")
     @Test
     void findAllByPriceAndName() {
-        ProductsResponse products = productService.findAllByPriceAndName(new ProductRequest("컴퓨터", 3000000L, store.getId()));
+        ProductsResponse products = productService.findAllByPriceAndName(
+                new ProductRequest("컴퓨터", 3000000L, store.getId()));
         assertThat(products.contains(ProductResponse.of(product1, product1.getPrice()))).isTrue();
+    }
+
+    @DisplayName("상점 번호에 해당되는 모든 상품 조회")
+    @Test
+    void findAllByStoreId() {
+        Product product = new Product("newProduct", 100000L, Store.builder().build());
+        productRepository.save(product);
+
+        ProductsResponse productsResponse = productService.findAllByStoreId(store.getId());
+        List<ProductResponse> productResponses = productsResponse.getProductResponses();
+        List<Long> productIds = productResponses.stream()
+                .map(ProductResponse::getId)
+                .collect(Collectors.toList());
+
+        assertThat(productIds).containsOnly(product1.getId(), product2.getId(), product3.getId());
     }
 }

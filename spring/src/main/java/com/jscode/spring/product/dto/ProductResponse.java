@@ -21,7 +21,19 @@ public class ProductResponse {
     }
 
     public static ProductResponse of(final Product product, final double price) {
-        return new ProductResponse(product.getId(), product.getName(), price);
+        return ProductResponse.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .price(price)
+                .build();
+    }
+
+    public static ProductResponse from(final Product product) {
+        return ProductResponse.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .price(product.getPrice())
+                .build();
     }
 
 }
