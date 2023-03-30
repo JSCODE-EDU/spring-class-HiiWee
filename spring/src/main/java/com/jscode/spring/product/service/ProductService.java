@@ -1,17 +1,17 @@
 package com.jscode.spring.product.service;
 
-import com.jscode.spring.store.domain.Store;
-import com.jscode.spring.store.exception.StoreNotFoundException;
-import com.jscode.spring.store.repository.StoreRepository;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
-import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
+import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
 import com.jscode.spring.product.exception.ProductNotFoundException;
 import com.jscode.spring.product.repository.ProductRepository;
+import com.jscode.spring.store.domain.Store;
+import com.jscode.spring.store.exception.StoreNotFoundException;
+import com.jscode.spring.store.repository.StoreRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
