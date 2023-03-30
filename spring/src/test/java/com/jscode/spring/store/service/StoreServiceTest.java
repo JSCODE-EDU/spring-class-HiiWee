@@ -7,8 +7,11 @@ import com.jscode.spring.store.domain.Address;
 import com.jscode.spring.store.domain.Store;
 import com.jscode.spring.store.dto.StoreResponse;
 import com.jscode.spring.store.dto.StoreSaveRequest;
+import com.jscode.spring.store.dto.StoresResponse;
 import com.jscode.spring.store.exception.StoreNotFoundException;
 import com.jscode.spring.store.repository.StoreRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@Transactional
+@Transactional(readOnly = true)
 class StoreServiceTest {
 
     @Autowired
@@ -41,6 +44,7 @@ class StoreServiceTest {
     }
 
     @DisplayName("상점을 저장한다.")
+    @Transactional
     @Test
     void saveProduct_success() {
         StoreSaveRequest saveRequest = StoreSaveRequest.builder()
@@ -74,12 +78,30 @@ class StoreServiceTest {
         );
     }
 
-    @DisplayName("존재하지 않는 상품은 찾을 수 없다.")
+    @DisplayName("존재하지 않는 상점은 찾을 수 없다.")
     @Test
     void findById_exception_notExistId() {
         assertThatThrownBy(() -> storeService.findById(111111L))
                 .isInstanceOf(StoreNotFoundException.class)
                 .hasMessageContaining("상점을 찾을 수 없습니다.");
+    }
+
+    @DisplayName("모든 상점을 조회할 수 있다.")
+    @Transactional
+    @Test
+    void findAll() {
+        Store test1 = Store.builder().name("test1").build();
+        Store test2 = Store.builder().name("test2").build();
+        storeRepository.save(test1);
+        storeRepository.save(test2);
+
+        StoresResponse storesResponse = storeService.findAll();
+        List<StoreResponse> stores = storesResponse.getStores();
+        List<Long> storeIds = stores.stream()
+                .map(StoreResponse::getId)
+                .collect(Collectors.toList());
+
+        assertThat(storeIds).containsOnly(store.getId(), test1.getId(), test2.getId());
     }
 
 }
