@@ -1,6 +1,6 @@
-package com.jscode.spring.Store.dto;
+package com.jscode.spring.store.dto;
 
-import com.jscode.spring.Store.domain.Address;
+import com.jscode.spring.store.domain.Address;
 import lombok.Builder;
 import lombok.Getter;
 

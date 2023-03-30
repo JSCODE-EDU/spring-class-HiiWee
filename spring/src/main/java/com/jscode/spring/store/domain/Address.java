@@ -1,4 +1,4 @@
-package com.jscode.spring.Store.domain;
+package com.jscode.spring.store.domain;
 
 import java.util.Objects;
 import javax.persistence.Embeddable;

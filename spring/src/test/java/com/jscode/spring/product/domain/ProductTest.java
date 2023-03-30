@@ -2,8 +2,8 @@ package com.jscode.spring.product.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.jscode.spring.Store.domain.Address;
-import com.jscode.spring.Store.domain.Store;
+import com.jscode.spring.store.domain.Address;
+import com.jscode.spring.store.domain.Store;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,10 +1,10 @@
-package com.jscode.spring.Store.service;
+package com.jscode.spring.store.service;
 
-import com.jscode.spring.Store.domain.Store;
-import com.jscode.spring.Store.dto.StoreResponse;
-import com.jscode.spring.Store.dto.StoreSaveRequest;
-import com.jscode.spring.Store.exception.StoreNotFoundException;
-import com.jscode.spring.Store.repository.StoreRepository;
+import com.jscode.spring.store.domain.Store;
+import com.jscode.spring.store.dto.StoreResponse;
+import com.jscode.spring.store.dto.StoreSaveRequest;
+import com.jscode.spring.store.exception.StoreNotFoundException;
+import com.jscode.spring.store.repository.StoreRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

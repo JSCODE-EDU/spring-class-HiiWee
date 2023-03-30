@@ -1,4 +1,4 @@
-package com.jscode.spring.Store.exception;
+package com.jscode.spring.store.exception;
 
 import com.jscode.spring.advice.NotFoundException;
 

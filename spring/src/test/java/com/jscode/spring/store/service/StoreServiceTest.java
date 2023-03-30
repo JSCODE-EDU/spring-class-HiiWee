@@ -1,13 +1,13 @@
-package com.jscode.spring.Store.service;
+package com.jscode.spring.store.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jscode.spring.Store.domain.Address;
-import com.jscode.spring.Store.domain.Store;
-import com.jscode.spring.Store.dto.StoreSaveRequest;
-import com.jscode.spring.Store.exception.StoreNotFoundException;
-import com.jscode.spring.Store.repository.StoreRepository;
+import com.jscode.spring.store.domain.Address;
+import com.jscode.spring.store.domain.Store;
+import com.jscode.spring.store.dto.StoreSaveRequest;
+import com.jscode.spring.store.exception.StoreNotFoundException;
+import com.jscode.spring.store.repository.StoreRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

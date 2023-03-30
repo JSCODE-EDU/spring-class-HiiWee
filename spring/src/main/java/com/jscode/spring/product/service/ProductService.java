@@ -1,8 +1,8 @@
 package com.jscode.spring.product.service;
 
-import com.jscode.spring.Store.domain.Store;
-import com.jscode.spring.Store.exception.StoreNotFoundException;
-import com.jscode.spring.Store.repository.StoreRepository;
+import com.jscode.spring.store.domain.Store;
+import com.jscode.spring.store.exception.StoreNotFoundException;
+import com.jscode.spring.store.repository.StoreRepository;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;

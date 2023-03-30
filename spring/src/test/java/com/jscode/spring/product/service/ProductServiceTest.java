@@ -3,9 +3,9 @@ package com.jscode.spring.product.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jscode.spring.Store.domain.Address;
-import com.jscode.spring.Store.domain.Store;
-import com.jscode.spring.Store.repository.StoreRepository;
+import com.jscode.spring.store.domain.Address;
+import com.jscode.spring.store.domain.Store;
+import com.jscode.spring.store.repository.StoreRepository;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;

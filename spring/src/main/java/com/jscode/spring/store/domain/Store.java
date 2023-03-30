@@ -1,4 +1,4 @@
-package com.jscode.spring.Store.domain;
+package com.jscode.spring.store.domain;
 
 import com.jscode.spring.product.domain.Product;
 import java.util.ArrayList;
