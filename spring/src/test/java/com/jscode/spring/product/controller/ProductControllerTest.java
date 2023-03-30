@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jscode.spring.product.dto.ProductListResponse;
+import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
@@ -126,7 +126,7 @@ class ProductControllerTest {
     @DisplayName("모든 상품 조회 요청을 받으면 상품 리스트를 반환한다.")
     void findProducts() throws Exception {
         List<ProductResponse> productResponses = List.of(productResponse1, productResponse2);
-        doReturn(new ProductListResponse(productResponses)).when(productService)
+        doReturn(new ProductsResponse(productResponses)).when(productService)
                 .findAll(any());
 
         mockMvc.perform(get("/api/products"))
@@ -142,7 +142,7 @@ class ProductControllerTest {
     @DisplayName("특정 이름을 통해 상품 조회 요청을 받으면 상품 리스트를 반환한다.")
     void findProductByQueryStringName() throws Exception {
         List<ProductResponse> productResponses = List.of(productResponse1);
-        doReturn(new ProductListResponse(productResponses)).when(productService)
+        doReturn(new ProductsResponse(productResponses)).when(productService)
                 .findAllByName(any(), any());
 
         mockMvc.perform(get("/api/products").param("name", "product1"))
@@ -201,7 +201,7 @@ class ProductControllerTest {
     @DisplayName("특정 가격을 기준으로 상품 조회 요청이 오면 이름 내림차순으로 정렬한 상품 리스트가 반환한다.")
     void findAllProductByPriceOrderByName() throws Exception {
         List<ProductResponse> productResponses = List.of(productResponse2, productResponse1);
-        doReturn(new ProductListResponse(productResponses)).when(productService)
+        doReturn(new ProductsResponse(productResponses)).when(productService)
                 .findAllByPriceOrderByName(any());
 
         mockMvc.perform(get("/api/products")
@@ -218,7 +218,7 @@ class ProductControllerTest {
     @DisplayName("특정 가격과 이름으로 상품 조회 요청이 오면 해당되는 상품 리스트를 반환한다.")
     void findAllByPriceAndName() throws Exception {
         List<ProductResponse> productResponses = List.of(productResponse1);
-        doReturn(new ProductListResponse(productResponses)).when(productService)
+        doReturn(new ProductsResponse(productResponses)).when(productService)
                 .findAllByPriceAndName(any());
 
         mockMvc.perform(get("/api/products")

@@ -6,16 +6,16 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 
 @Getter
-public class ProductListResponse {
+public class ProductsResponse {
 
     private List<ProductResponse> productResponses;
 
-    public ProductListResponse(final List<ProductResponse> productResponses) {
+    public ProductsResponse(final List<ProductResponse> productResponses) {
         this.productResponses = productResponses;
     }
 
-    public static ProductListResponse from(final List<Product> products) {
-        return new ProductListResponse(
+    public static ProductsResponse from(final List<Product> products) {
+        return new ProductsResponse(
                 products.stream()
                         .map(product -> ProductResponse.of(product, product.getPrice()))
                         .collect(Collectors.toList())

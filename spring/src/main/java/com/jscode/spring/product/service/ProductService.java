@@ -6,7 +6,7 @@ import com.jscode.spring.store.repository.StoreRepository;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
-import com.jscode.spring.product.dto.ProductListResponse;
+import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
@@ -51,17 +51,17 @@ public class ProductService {
                 .getId();
     }
 
-    public ProductListResponse findAllByName(final String name, @Nullable final String monetaryUnit) {
+    public ProductsResponse findAllByName(final String name, @Nullable final String monetaryUnit) {
         List<Product> products = productRepository.findAllByName(name);
         if (products.isEmpty()) {
             throw new ProductNotFoundException();
         }
-        return new ProductListResponse(createConvertedPriceProducts(monetaryUnit, products));
+        return new ProductsResponse(createConvertedPriceProducts(monetaryUnit, products));
     }
 
-    public ProductListResponse findAll(@Nullable final String monetaryUnit) {
+    public ProductsResponse findAll(@Nullable final String monetaryUnit) {
         List<Product> products = productRepository.findAll();
-        return new ProductListResponse(createConvertedPriceProducts(monetaryUnit, products));
+        return new ProductsResponse(createConvertedPriceProducts(monetaryUnit, products));
     }
 
     private List<ProductResponse> createConvertedPriceProducts(@Nullable final String monetaryUnit,
@@ -89,17 +89,17 @@ public class ProductService {
         return exchangeRatesService.convertKrwTo(MonetaryUnit.valueOf(monetaryUnit), product.getPrice());
     }
 
-    public ProductListResponse findAllByPriceOrderByName(final Long price) {
+    public ProductsResponse findAllByPriceOrderByName(final Long price) {
         List<Product> products = productRepository.findAllByPriceOrderByNameDesc(price);
-        return ProductListResponse.from(products);
+        return ProductsResponse.from(products);
     }
 
-    public ProductListResponse findAllByPriceAndName(final ProductRequest productRequest) {
+    public ProductsResponse findAllByPriceAndName(final ProductRequest productRequest) {
         List<Product> products = productRepository.findAllByPriceAndName(
                 productRequest.getPrice(),
                 productRequest.getName()
         );
-        return ProductListResponse.from(products);
+        return ProductsResponse.from(products);
     }
 
 }

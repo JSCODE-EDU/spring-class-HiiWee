@@ -1,6 +1,6 @@
 package com.jscode.spring.product.controller;
 
-import com.jscode.spring.product.dto.ProductListResponse;
+import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.dto.ProductSaveResponse;
@@ -41,14 +41,14 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ProductListResponse findProducts(@RequestParam @Nullable final String monetaryUnit) {
+    public ProductsResponse findProducts(@RequestParam @Nullable final String monetaryUnit) {
         log.info("call findProducts");
         return productService.findAll(monetaryUnit);
     }
 
     @GetMapping(value = "/products", params = "name")
-    public ProductListResponse findProductByQueryStringName(@RequestParam final String name,
-                                                            @RequestParam @Nullable final String monetaryUnit) {
+    public ProductsResponse findProductByQueryStringName(@RequestParam final String name,
+                                                         @RequestParam @Nullable final String monetaryUnit) {
         log.info("call findProductByQueryStringName");
         return productService.findAllByName(name, monetaryUnit);
     }
@@ -61,13 +61,13 @@ public class ProductController {
     }
 
     @GetMapping(value = "/products", params = "price")
-    public ProductListResponse findAllProductByPriceOrderByName(@RequestParam final Long price) {
+    public ProductsResponse findAllProductByPriceOrderByName(@RequestParam final Long price) {
         log.info("call findAllProductByPriceOrderByName");
         return productService.findAllByPriceOrderByName(price);
     }
 
     @GetMapping(value = "/products", params = {"name", "price"})
-    public ProductListResponse findAllByPriceAndName(final ProductRequest productRequest) {
+    public ProductsResponse findAllByPriceAndName(final ProductRequest productRequest) {
         log.info("call findAllByPriceAndName");
         return productService.findAllByPriceAndName(productRequest);
     }

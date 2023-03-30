@@ -9,7 +9,7 @@ import com.jscode.spring.store.repository.StoreRepository;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
-import com.jscode.spring.product.dto.ProductListResponse;
+import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
@@ -83,7 +83,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("전체 상품 조회 성공 테스트")
     void findAll_success() {
-        ProductListResponse products = productService.findAll(null);
+        ProductsResponse products = productService.findAll(null);
 
         Assertions.assertAll(
                 () -> assertThat(products.contains(ProductResponse.of(product1, 3000000))).isTrue(),
@@ -95,7 +95,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("존재하는 name에 대한 전체 상품 조회 성공")
     void findAllByName_success() {
-        ProductListResponse productListResponse = productService.findAllByName("컴퓨터", null);
+        ProductsResponse productListResponse = productService.findAllByName("컴퓨터", null);
 
         assertThat(
                 productListResponse.contains(ProductResponse.of(new Product("컴퓨터", 3_000_000L, store), 3000000))).isTrue();
@@ -162,7 +162,7 @@ class ProductServiceTest {
         productRepository.save(samePriceProduct2);
         productRepository.save(samePriceProduct3);
 
-        ProductListResponse findProducts = productService.findAllByPriceOrderByName(3000L);
+        ProductsResponse findProducts = productService.findAllByPriceOrderByName(3000L);
 
         assertThat(findProducts.getProductResponses()).containsExactly(
                 ProductResponse.of(samePriceProduct3, 3000L),
@@ -174,7 +174,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("상품 가격, 이름으로 조회")
     void findAllByPriceAndName() {
-        ProductListResponse products = productService.findAllByPriceAndName(new ProductRequest("컴퓨터", 3000000L, store.getId()));
+        ProductsResponse products = productService.findAllByPriceAndName(new ProductRequest("컴퓨터", 3000000L, store.getId()));
         assertThat(products.contains(ProductResponse.of(product1, product1.getPrice()))).isTrue();
     }
 }
