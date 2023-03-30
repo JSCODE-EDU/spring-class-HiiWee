@@ -25,7 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@Transactional
+@Transactional(readOnly = true)
 class ProductServiceTest {
 
     @Autowired
@@ -66,8 +66,9 @@ class ProductServiceTest {
         productRepository.save(product3);
     }
 
-    @Test
     @DisplayName("상품 저장 성공 테스트")
+    @Transactional
+    @Test
     void saveProduct_success() {
         Long id = productService.saveProduct(new ProductRequest("test", 3000L, store.getId()));
         Product product = productRepository.findById(id).get();
@@ -80,8 +81,8 @@ class ProductServiceTest {
         );
     }
 
-    @Test
     @DisplayName("전체 상품 조회 성공 테스트")
+    @Test
     void findAll_success() {
         ProductsResponse products = productService.findAll(null);
 
@@ -92,8 +93,8 @@ class ProductServiceTest {
         );
     }
 
-    @Test
     @DisplayName("존재하는 name에 대한 전체 상품 조회 성공")
+    @Test
     void findAllByName_success() {
         ProductsResponse productListResponse = productService.findAllByName("컴퓨터", null);
 
@@ -101,8 +102,8 @@ class ProductServiceTest {
                 productListResponse.contains(ProductResponse.of(new Product("컴퓨터", 3_000_000L, store), 3000000))).isTrue();
     }
 
-    @Test
     @DisplayName("없는 name에 대한 전체 상품 조회 실패 테스트")
+    @Test
     void findAllByName_fail_withInvalidName() {
         String name = "nothing";
 
@@ -111,8 +112,9 @@ class ProductServiceTest {
                 .hasMessageContaining("존재하지 않는 상품입니다.");
     }
 
-    @Test
     @DisplayName("동일 이름 상품 저장시 예외 발생 테스트")
+    @Transactional
+    @Test
     void saveDuplicateNameProduct_fail_withException() {
         ProductRequest request1 = new ProductRequest("sameName", 3000L, store.getId());
         ProductRequest request2 = new ProductRequest("sameName", 5000L, store.getId());
@@ -124,8 +126,8 @@ class ProductServiceTest {
                 .hasMessageContaining("동일한 이름의 상품은 저장할 수 없습니다.");
     }
 
-    @Test
     @DisplayName("단순 상품 ID 조회")
+    @Test
     void findProductById_success() {
         ProductResponse productById = productService.findProductById(product1.getId(), null);
 
@@ -133,8 +135,8 @@ class ProductServiceTest {
     }
 
     @Disabled
-    @Test
     @DisplayName("상품 ID 및 KRW 단위로 조회 성공 테스트")
+    @Test
     void findProductById_success_withKRW_monetaryUnit() {
         ProductResponse productByName = productService.findProductById(product1.getId(), "KRW");
 
@@ -142,8 +144,8 @@ class ProductServiceTest {
     }
 
     @Disabled
-    @Test
     @DisplayName("상품 ID 및 USD 단위로 조회 성공 테스트")
+    @Test
     void findProductById_success_withUSD_monetaryUnit() {
         double usdPrice = exchangeRatesService.convertKrwTo(MonetaryUnit.USD, product1.getPrice());
 
@@ -152,8 +154,9 @@ class ProductServiceTest {
         assertThat(productByName.getPrice()).isEqualTo(usdPrice);
     }
 
-    @Test
     @DisplayName("상품 가격으로 조회시 이름 내림차순으로 조회")
+    @Transactional
+    @Test
     void findAllByPriceOrderByName() {
         Product samePriceProduct1 = new Product("samePriceProduct1", 3000L, store);
         Product samePriceProduct2 = new Product("samePriceProduct2", 3000L, store);
@@ -171,8 +174,8 @@ class ProductServiceTest {
         );
     }
 
-    @Test
     @DisplayName("상품 가격, 이름으로 조회")
+    @Test
     void findAllByPriceAndName() {
         ProductsResponse products = productService.findAllByPriceAndName(new ProductRequest("컴퓨터", 3000000L, store.getId()));
         assertThat(products.contains(ProductResponse.of(product1, product1.getPrice()))).isTrue();

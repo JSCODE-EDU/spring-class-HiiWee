@@ -19,8 +19,8 @@ class StudentTest {
     @Autowired
     EntityManager entityManager;
 
-    @Test
     @DisplayName("Student의 studentClass 칼럼이 null이라면 디폴트값이 생성 된다.")
+    @Test
     void generate_column_withDefaultValue() {
         Student student = Student.builder()
                 .name("호석")

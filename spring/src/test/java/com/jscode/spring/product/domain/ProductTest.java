@@ -31,20 +31,20 @@ class ProductTest {
         product.generateId(1L);
     }
 
-    @Test
     @DisplayName("동일 상품 id 확인")
+    @Test
     void contains() {
         assertThat(product.isSameId(1L)).isTrue();
     }
 
-    @Test
     @DisplayName("동일 상품 이름 조회")
+    @Test
     void isSameName() {
         assertThat(product.isSameName("test")).isTrue();
     }
 
-    @Test
     @DisplayName("상품이 등록되면 반드시 상점 정보가 있어야 한다.")
+    @Test
     void registerStore() {
         product.registerStore(store);
 

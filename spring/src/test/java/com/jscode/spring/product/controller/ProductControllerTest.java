@@ -64,8 +64,8 @@ class ProductControllerTest {
                 .build();
     }
 
-    @Test
     @DisplayName("상품 등록 요청을 받으면 새로운 상품을 등록한다.")
+    @Test
     void saveProduct() throws Exception {
         doReturn(1L).when(productService)
                 .saveProduct(ArgumentMatchers.any());
@@ -79,8 +79,8 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @DisplayName("동일한 상품 이름을 등록하면 400를 반환한다.")
+    @Test
     void saveProduct_exception_duplicatedName() throws Exception {
         doThrow(new DuplicateNameException()).when(productService)
                 .saveProduct(any());
@@ -95,8 +95,8 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @DisplayName("pathVariable id값을 통한 상품 조회 요청이 오면 상품을 반환한다.")
+    @Test
     void findProductById() throws Exception {
         doReturn(productResponse1).when(productService)
                 .findProductById(any(), any());
@@ -110,8 +110,8 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @DisplayName("존재하지 않는 id값을 통한 상품 조회 요청이 오면 404를 반환한다.")
+    @Test
     void findProductById_exception_notExistId() throws Exception {
         doThrow(new ProductNotFoundException()).when(productService)
                 .findProductById(any(), any());
@@ -122,8 +122,8 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @DisplayName("모든 상품 조회 요청을 받으면 상품 리스트를 반환한다.")
+    @Test
     void findProducts() throws Exception {
         List<ProductResponse> productResponses = List.of(productResponse1, productResponse2);
         doReturn(new ProductsResponse(productResponses)).when(productService)
@@ -138,8 +138,8 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @DisplayName("특정 이름을 통해 상품 조회 요청을 받으면 상품 리스트를 반환한다.")
+    @Test
     void findProductByQueryStringName() throws Exception {
         List<ProductResponse> productResponses = List.of(productResponse1);
         doReturn(new ProductsResponse(productResponses)).when(productService)
@@ -155,8 +155,8 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @DisplayName("없는 이름을 통해 상품 조회 요청을 받으면 404를 반환한다.")
+    @Test
     void findProductByQueryStringName_exception_notExistName() throws Exception {
         doThrow(new ProductNotFoundException()).when(productService)
                 .findAllByName(any(), any());
@@ -168,8 +168,8 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @DisplayName("queryString id값을 통한 상품 조회 요청이 오면 상품을 반환한다.")
+    @Test
     void findProductByQueryStringId() throws Exception {
         doReturn(productResponse1).when(productService)
                 .findProductById(any(), any());
@@ -184,8 +184,8 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @DisplayName("존재하지 않는 queryString id값을 통한 상품 조회 요청이 오면 404를 반환한다.")
+    @Test
     void findProductByQueryStringId_exception_notExistId() throws Exception {
         doThrow(new ProductNotFoundException()).when(productService)
                 .findProductById(any(), any());
@@ -197,8 +197,8 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @DisplayName("특정 가격을 기준으로 상품 조회 요청이 오면 이름 내림차순으로 정렬한 상품 리스트가 반환한다.")
+    @Test
     void findAllProductByPriceOrderByName() throws Exception {
         List<ProductResponse> productResponses = List.of(productResponse2, productResponse1);
         doReturn(new ProductsResponse(productResponses)).when(productService)
@@ -214,8 +214,8 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @DisplayName("특정 가격과 이름으로 상품 조회 요청이 오면 해당되는 상품 리스트를 반환한다.")
+    @Test
     void findAllByPriceAndName() throws Exception {
         List<ProductResponse> productResponses = List.of(productResponse1);
         doReturn(new ProductsResponse(productResponses)).when(productService)
