@@ -1,7 +1,8 @@
 package com.jscode.spring.product.service;
 
 import com.jscode.spring.Store.domain.Store;
-import com.jscode.spring.Store.service.StoreService;
+import com.jscode.spring.Store.exception.StoreNotFoundException;
+import com.jscode.spring.Store.repository.StoreRepository;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
@@ -23,20 +24,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ExchangeRatesService exchangeRatesService;
-    private final StoreService storeService;
-
     private final ProductRepository productRepository;
+    private final StoreRepository storeRepository;
 
     public ProductService(final ProductRepository productRepository, final ExchangeRatesService exchangeRatesService,
-                          final StoreService storeService) {
+                          final StoreRepository storeRepository) {
         this.productRepository = productRepository;
         this.exchangeRatesService = exchangeRatesService;
-        this.storeService = storeService;
+        this.storeRepository = storeRepository;
     }
 
     @Transactional
     public Long saveProduct(final ProductRequest productRequest) {
-        Store store = storeService.findById(productRequest.getStoreId());
+        Store store = storeRepository.findById(productRequest.getStoreId())
+                .orElseThrow(StoreNotFoundException::new);
         Product product = Product.builder()
                 .name(productRequest.getName())
                 .price(productRequest.getPrice())

@@ -1,10 +1,12 @@
 package com.jscode.spring.Store.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jscode.spring.Store.domain.Address;
 import com.jscode.spring.Store.domain.Store;
 import com.jscode.spring.Store.dto.StoreSaveRequest;
+import com.jscode.spring.Store.exception.StoreNotFoundException;
 import com.jscode.spring.Store.repository.StoreRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,6 +58,14 @@ class StoreServiceTest {
                 () -> assertThat(savedStore.getAddress()).isEqualTo(new Address("도로명", "상세주소")),
                 () -> assertThat(savedStore.getPhone()).isEqualTo("010-0000-0000")
         );
+    }
+
+    @DisplayName("존재하지 않는 상품은 찾을 수 없다.")
+    @Test
+    void findById_success() {
+        assertThatThrownBy(() -> storeService.findById(111111L))
+                .isInstanceOf(StoreNotFoundException.class)
+                .hasMessageContaining("상점을 찾을 수 없습니다.");
     }
 
 }

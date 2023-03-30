@@ -75,7 +75,8 @@ class ProductServiceTest {
         Assertions.assertAll(
                 () -> assertThat(product.getId()).isEqualTo(id),
                 () -> assertThat(product.getName()).isEqualTo("test"),
-                () -> assertThat(product.getPrice()).isEqualTo(3000)
+                () -> assertThat(product.getPrice()).isEqualTo(3000),
+                () -> assertThat(product.getStore().getId()).isEqualTo(store.getId())
         );
     }
 

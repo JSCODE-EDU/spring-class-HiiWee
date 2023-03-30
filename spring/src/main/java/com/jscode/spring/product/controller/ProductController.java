@@ -53,9 +53,6 @@ public class ProductController {
         return productService.findAllByName(name, monetaryUnit);
     }
 
-    /**
-     * (미션1) 상품 상세 조회 구현
-     */
     @GetMapping(value = "/products", params = "id")
     public ProductResponse findProductByQueryStringId(@RequestParam final Long id,
                                                       @RequestParam @Nullable final String monetaryUnit) {
@@ -63,18 +60,12 @@ public class ProductController {
         return productService.findProductById(id, monetaryUnit);
     }
 
-    /**
-     * (미션2) 상품 조회 메소드 구현(가격)
-     */
     @GetMapping(value = "/products", params = "price")
     public ProductListResponse findAllProductByPriceOrderByName(@RequestParam final Long price) {
         log.info("call findAllProductByPriceOrderByName");
         return productService.findAllByPriceOrderByName(price);
     }
 
-    /**
-     * (미션2) 상품 조회 메소드 구현(이름)
-     */
     @GetMapping(value = "/products", params = {"name", "price"})
     public ProductListResponse findAllByPriceAndName(final ProductRequest productRequest) {
         log.info("call findAllByPriceAndName");
