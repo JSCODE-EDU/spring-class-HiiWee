@@ -36,7 +36,6 @@ public class Product {
     protected Product() {
     }
 
-    // TODO 상품과 상점의 연관관계가 추가되면서 기존 로직들의 변경이 요구됨
     @Builder
     public Product(final String name, final Long price, final Store store) {
         this.name = name;
@@ -59,6 +58,10 @@ public class Product {
 
     public boolean isSameName(final String name) {
         return this.name.equals(name);
+    }
+
+    public Long getStoreId() {
+        return store.getId();
     }
 
 }

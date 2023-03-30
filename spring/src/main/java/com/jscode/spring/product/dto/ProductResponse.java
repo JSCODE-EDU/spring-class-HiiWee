@@ -12,12 +12,14 @@ public class ProductResponse {
     private Long id;
     private String name;
     private double price;
+    private Long storeId;
 
     @Builder
-    private ProductResponse(final Long id, final String name, final double price) {
+    private ProductResponse(final Long id, final String name, final double price, final Long storeId) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.storeId = storeId;
     }
 
     public static ProductResponse of(final Product product, final double price) {
@@ -25,6 +27,7 @@ public class ProductResponse {
                 .id(product.getId())
                 .name(product.getName())
                 .price(price)
+                .storeId(product.getStoreId())
                 .build();
     }
 
@@ -33,6 +36,7 @@ public class ProductResponse {
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
+                .storeId(product.getStoreId())
                 .build();
     }
 

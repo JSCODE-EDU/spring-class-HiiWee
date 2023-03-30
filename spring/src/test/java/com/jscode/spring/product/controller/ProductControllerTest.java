@@ -10,12 +10,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
+import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
 import com.jscode.spring.product.exception.ProductNotFoundException;
 import com.jscode.spring.product.service.ProductService;
+import com.jscode.spring.store.domain.Address;
+import com.jscode.spring.store.domain.Store;
+import com.jscode.spring.store.repository.StoreRepository;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,16 +54,17 @@ class ProductControllerTest {
                 .price(3000L)
                 .storeId(1L)
                 .build();
-
         productResponse1 = ProductResponse.builder()
                 .id(1L)
                 .name("product1")
                 .price(3000L)
+                .storeId(1L)
                 .build();
         productResponse2 = ProductResponse.builder()
                 .id(2L)
                 .name("product2")
                 .price(3000L)
+                .storeId(1L)
                 .build();
     }
 
@@ -230,5 +234,21 @@ class ProductControllerTest {
                         jsonPath("$.productResponses[0].id").value(1L),
                         jsonPath("$.productResponses[0].name").value("product1"))
                 .andDo(print());
+    }
+
+    @DisplayName("특정 상점 번호로 상품 조회 요청이 오면 해당되는 상품 리스트를 반환한다.")
+    @Test
+    void findAllByStoreId_success() throws Exception {
+        List<ProductResponse> products = List.of(productResponse1, productResponse2);
+        doReturn(new ProductsResponse(products)).when(productService)
+                .findAllByStoreId(any());
+
+        mockMvc.perform(get("/api/products").param("storeId", "1"))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.productResponses.size()").value(2),
+                        jsonPath("$.productResponses[0].id").value(1L),
+                        jsonPath("$.productResponses[1].id").value(2L)
+                );
     }
 }

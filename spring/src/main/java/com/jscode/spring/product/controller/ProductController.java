@@ -1,9 +1,9 @@
 package com.jscode.spring.product.controller;
 
-import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.dto.ProductSaveResponse;
+import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
@@ -70,6 +70,14 @@ public class ProductController {
     public ProductsResponse findAllByPriceAndName(final ProductRequest productRequest) {
         log.info("call findAllByPriceAndName");
         return productService.findAllByPriceAndName(productRequest);
+    }
+
+    /**
+     * 하나의 상점에 속하는 모든 상품 조회 api
+     */
+    @GetMapping(value = "/products", params = "storeId")
+    public ProductsResponse findAllByStoreId(@RequestParam final Long storeId) {
+        return productService.findAllByStoreId(storeId);
     }
 
 }
