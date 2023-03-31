@@ -49,7 +49,7 @@ class ProductServiceTest {
         ProductResponse productResponse2 = ProductResponse.of(new Product(2L, "키보드", 100_000), 100000);
         ProductResponse productResponse3 = ProductResponse.of(new Product(3L, "마우스", 50_000), 50000);
 
-        ProductListResponse products = productService.findAll( null);
+        ProductListResponse products = productService.findAll(null);
 
         Assertions.assertAll(
                 () -> assertThat(products.contains(productResponse1)).isTrue(),
