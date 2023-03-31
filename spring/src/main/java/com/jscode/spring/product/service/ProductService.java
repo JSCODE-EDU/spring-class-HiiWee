@@ -40,12 +40,7 @@ public class ProductService {
     public Long saveProduct(final ProductSaveRequest productRequest) {
         Store store = storeRepository.findById(productRequest.getStoreId())
                 .orElseThrow(StoreNotFoundException::new);
-        Product product = Product.builder()
-                .name(productRequest.getName())
-                .price(productRequest.getPrice())
-                .store(store)
-                .build();
-        product.registerStore(store);
+        Product product = Product.createProduct(productRequest.getName(), productRequest.getPrice(), store);
         if (productRepository.findByName(product.getName()).isPresent()) {
             throw new DuplicateNameException();
         }

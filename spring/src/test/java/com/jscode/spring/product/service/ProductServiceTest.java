@@ -55,13 +55,9 @@ class ProductServiceTest {
                 .address(new Address("로", "번지"))
                 .phone("010-0000-0000")
                 .build();
-        product1 = new Product("컴퓨터", 3_000_000L, store);
-        product2 = new Product("키보드", 100_000L, store);
-        product3 = new Product("마우스", 50_000L, store);
-
-        product1.registerStore(store);
-        product2.registerStore(store);
-        product3.registerStore(store);
+        product1 = Product.createProduct("컴퓨터", 3_000_000L, store);
+        product2 = Product.createProduct("키보드", 100_000L, store);
+        product3 = Product.createProduct("마우스", 50_000L, store);
 
         storeRepository.save(store);
         productRepository.save(product1);

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jscode.spring.store.domain.Address;
 import com.jscode.spring.store.domain.Store;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,14 +42,4 @@ class ProductTest {
         assertThat(product.isSameName("test")).isTrue();
     }
 
-    @DisplayName("상품이 등록되면 반드시 상점 정보가 있어야 한다.")
-    @Test
-    void registerStore() {
-        product.registerStore(store);
-
-        Assertions.assertAll(
-                () -> assertThat(product.getStore()).isEqualTo(store),
-                () -> assertThat(store.getProducts()).contains(product)
-        );
-    }
 }

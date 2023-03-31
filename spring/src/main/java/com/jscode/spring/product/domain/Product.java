@@ -43,9 +43,14 @@ public class Product {
         this.store = store;
     }
 
-    public void registerStore(final Store store) {
-        this.store = store;
-        store.addProduct(this);
+    public static Product createProduct(final String name, final Long price, final Store store) {
+        Product product = Product.builder()
+                .name(name)
+                .price(price)
+                .store(store)
+                .build();
+        store.addProduct(product);
+        return product;
     }
 
     public void generateId(final Long id) {
