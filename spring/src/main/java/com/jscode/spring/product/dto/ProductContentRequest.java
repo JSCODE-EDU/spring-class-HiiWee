@@ -16,9 +16,6 @@ public class ProductContentRequest {
     @NotNull(message = "조회를 위한 가격 입력은 필수입니다.")
     private Long price;
 
-    public ProductContentRequest() {
-    }
-
     public ProductContentRequest(final String name, final Long price) {
         this.name = name;
         this.price = price;
