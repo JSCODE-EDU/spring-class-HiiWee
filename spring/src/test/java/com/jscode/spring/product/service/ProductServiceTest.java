@@ -6,7 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
-import com.jscode.spring.product.dto.ProductRequest;
+import com.jscode.spring.product.dto.ProductContentRequest;
+import com.jscode.spring.product.dto.ProductSaveRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
@@ -72,7 +73,7 @@ class ProductServiceTest {
     @Transactional
     @Test
     void saveProduct_success() {
-        Long id = productService.saveProduct(new ProductRequest("test", 3000L, store.getId()));
+        Long id = productService.saveProduct(new ProductSaveRequest("test", 3000L, store.getId()));
         Product product = productRepository.findById(id).get();
 
         Assertions.assertAll(
@@ -119,8 +120,8 @@ class ProductServiceTest {
     @Transactional
     @Test
     void saveDuplicateNameProduct_fail_withException() {
-        ProductRequest request1 = new ProductRequest("sameName", 3000L, store.getId());
-        ProductRequest request2 = new ProductRequest("sameName", 5000L, store.getId());
+        ProductSaveRequest request1 = new ProductSaveRequest("sameName", 3000L, store.getId());
+        ProductSaveRequest request2 = new ProductSaveRequest("sameName", 5000L, store.getId());
 
         productService.saveProduct(request1);
 
@@ -181,7 +182,7 @@ class ProductServiceTest {
     @Test
     void findAllByPriceAndName() {
         ProductsResponse products = productService.findAllByPriceAndName(
-                new ProductRequest("컴퓨터", 3000000L, store.getId()));
+                new ProductContentRequest("컴퓨터", 3000000L));
         assertThat(products.contains(ProductResponse.of(product1, product1.getPrice()))).isTrue();
     }
 

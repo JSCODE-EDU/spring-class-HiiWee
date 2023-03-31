@@ -11,3 +11,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+# Swagger 설정
+springdoc:
+  swagger-ui:
+    version: 'v1'
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json

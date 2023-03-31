@@ -1,13 +1,15 @@
 package com.jscode.spring.product.controller;
 
 import com.jscode.spring.config.ApiDocumentResponse;
-import com.jscode.spring.product.dto.ProductRequest;
+import com.jscode.spring.product.dto.ProductContentRequest;
+import com.jscode.spring.product.dto.ProductSaveRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.dto.ProductSaveResponse;
 import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +35,7 @@ public class ProductController {
     @ApiDocumentResponse
     @Operation(summary = "saveProduct", description = "상품 등록")
     @PostMapping("/products")
-    public ProductSaveResponse saveProduct(@RequestBody final ProductRequest productRequest) {
+    public ProductSaveResponse saveProduct(@Valid @RequestBody final ProductSaveRequest productRequest) {
         log.info("call saveProduct");
         Long generatedId = productService.saveProduct(productRequest);
         return new ProductSaveResponse(generatedId);
@@ -85,9 +87,9 @@ public class ProductController {
     @ApiDocumentResponse
     @Operation(summary = "findAllByPriceAndName", description = "특정 가격, 이름에 대한 모든 상품 조회")
     @GetMapping(value = "/products", params = {"name", "price"})
-    public ProductsResponse findAllByPriceAndName(final ProductRequest productRequest) {
+    public ProductsResponse findAllByPriceAndName(@Valid final ProductContentRequest productContentRequest) {
         log.info("call findAllByPriceAndName");
-        return productService.findAllByPriceAndName(productRequest);
+        return productService.findAllByPriceAndName(productContentRequest);
     }
 
     /**

@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jscode.spring.product.dto.ProductRequest;
+import com.jscode.spring.product.dto.ProductSaveRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
@@ -40,13 +40,13 @@ class ProductControllerTest {
     @MockBean
     ProductService productService;
 
-    ProductRequest productRequest1;
+    ProductSaveRequest productRequest1;
     ProductResponse productResponse1;
     ProductResponse productResponse2;
 
     @BeforeEach
     void setUp() {
-        productRequest1 = ProductRequest.builder()
+        productRequest1 = ProductSaveRequest.builder()
                 .name("newProduct")
                 .price(3000L)
                 .storeId(1L)

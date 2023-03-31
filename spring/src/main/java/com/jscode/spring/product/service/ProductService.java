@@ -3,7 +3,8 @@ package com.jscode.spring.product.service;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
-import com.jscode.spring.product.dto.ProductRequest;
+import com.jscode.spring.product.dto.ProductContentRequest;
+import com.jscode.spring.product.dto.ProductSaveRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
@@ -36,7 +37,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long saveProduct(final ProductRequest productRequest) {
+    public Long saveProduct(final ProductSaveRequest productRequest) {
         Store store = storeRepository.findById(productRequest.getStoreId())
                 .orElseThrow(StoreNotFoundException::new);
         Product product = Product.builder()
@@ -95,10 +96,10 @@ public class ProductService {
         return ProductsResponse.from(products);
     }
 
-    public ProductsResponse findAllByPriceAndName(final ProductRequest productRequest) {
+    public ProductsResponse findAllByPriceAndName(final ProductContentRequest productContentRequest) {
         List<Product> products = productRepository.findAllByPriceAndName(
-                productRequest.getPrice(),
-                productRequest.getName()
+                productContentRequest.getPrice(),
+                productContentRequest.getName()
         );
         return ProductsResponse.from(products);
     }
