@@ -1,52 +1,39 @@
 package com.jscode.spring.product.repository;
 
 import com.jscode.spring.product.domain.Product;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-@Repository
-public class ProductRepository {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    private static final List<Product> store = new ArrayList<>();
-    private static final AtomicLong counter = new AtomicLong(3L);
+    List<Product> findAllByName(final String name);
 
-    static {
-        store.add(new Product(1L, "컴퓨터", 3_000_000));
-        store.add(new Product(2L, "키보드", 100_000));
-        store.add(new Product(3L, "마우스", 50_000));
-    }
+    Optional<Product> findByName(final String name);
 
-    public List<Product> findAll() {
-        return Collections.unmodifiableList(store);
-    }
+    List<Product> findAllByPriceOrderByNameDesc(final Long price);
 
-    public List<Product> findAllByName(final String name) {
-        return store.stream()
-                .filter(product -> product.isSameName(name))
-                .collect(Collectors.toUnmodifiableList());
-    }
+    List<Product> findAllByPriceAndName(Long price, String name);
 
-    public Optional<Product> findById(final Long id) {
-        return store.stream()
-                .filter(product -> product.isSameId(id))
-                .findAny();
-    }
+    // 전체 상품 조회시 name이 특정 이름인 상품 무시
+    @Query("SELECT p FROM Product p WHERE p.name <> :excludeName")
+    List<Product> findAllByNameExceptExcludeName(final String excludeName);
 
-    public Long save(final Product product) {
-        product.generateId(counter.incrementAndGet());
-        store.add(product);
-        return product.getId();
-    }
+    // 가장 가격이 비싼 상품 조회하기
+    @Query("SELECT p FROM Product p WHERE p.price = (SELECT max(sp.price) FROM Product sp )")
+    List<Product> findAllWithMaxPrice();
 
-    public Optional<Product> findByName(final String name) {
-        return store.stream()
-                .filter(product -> product.isSameName(name))
-                .findAny();
-    }
+    // 이름에 "컴"을 포함하는 상품 조회하기
+    @Query("SELECT p FROM Product p WHERE p.name like :nameFormat")
+    List<Product> findAllByNameIsLikeNameFormat(final String nameFormat);
+
+    // 가장 가격이 저렴한 상품의 이름만 조회
+    @Query("SELECT p.name FROM Product p WHERE p.price = (SELECT min(sp.price) FROM Product sp)")
+    List<String> findNamesWithMinPrice();
+
+    // 상품 가격의 평균 구하기
+    @Query("SELECT avg(p.price) FROM Product p")
+    Long findAveragePrice();
 
 }

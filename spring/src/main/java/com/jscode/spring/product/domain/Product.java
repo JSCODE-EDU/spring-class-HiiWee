@@ -1,17 +1,33 @@
 package com.jscode.spring.product.domain;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Getter;
 
 @Getter
+@Entity
+@Table
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private int price;
 
-    public Product(final Long id, final String name, final int price) {
-        this.id = id;
+    @Column
+    private String name;
+
+    @Column
+    private Long price;
+
+    protected Product() {
+    }
+
+    public Product(final String name, final Long price) {
         this.name = name;
         this.price = price;
     }
@@ -27,4 +43,5 @@ public class Product {
     public boolean isSameName(final String name) {
         return this.name.equals(name);
     }
+
 }

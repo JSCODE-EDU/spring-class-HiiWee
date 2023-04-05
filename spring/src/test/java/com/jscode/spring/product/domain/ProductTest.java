@@ -12,7 +12,8 @@ class ProductTest {
 
     @BeforeEach
     void setUp() {
-        product = new Product(1L, "test", 3000);
+        product = new Product("test", 3000L);
+        product.generateId(1L);
     }
 
     @Test

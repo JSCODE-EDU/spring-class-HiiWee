@@ -3,8 +3,8 @@ package com.jscode.spring.product.service;
 import com.jscode.spring.exchange.service.ExchangeRatesService;
 import com.jscode.spring.product.domain.MonetaryUnit;
 import com.jscode.spring.product.domain.Product;
-import com.jscode.spring.product.dto.NewProductRequest;
 import com.jscode.spring.product.dto.ProductListResponse;
+import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.exception.DuplicateNameException;
 import com.jscode.spring.product.exception.ProductNotFoundException;
@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class ProductService {
 
     private final ExchangeRatesService exchangeRatesService;
@@ -27,15 +29,17 @@ public class ProductService {
         this.exchangeRatesService = exchangeRatesService;
     }
 
-    public Long saveProduct(final NewProductRequest newProductRequest) {
-        Product product = newProductRequest.toDomain();
+    @Transactional
+    public Long saveProduct(final ProductRequest productRequest) {
+        Product product = productRequest.toDomain();
         if (productRepository.findByName(product.getName()).isPresent()) {
             throw new DuplicateNameException();
         }
-        return productRepository.save(product);
+        return productRepository.save(product)
+                .getId();
     }
 
-    public ProductListResponse findAllByName(@Nullable final String name, @Nullable final String monetaryUnit) {
+    public ProductListResponse findAllByName(final String name, @Nullable final String monetaryUnit) {
         List<Product> products = productRepository.findAllByName(name);
         if (products.isEmpty()) {
             throw new ProductNotFoundException();
@@ -43,12 +47,12 @@ public class ProductService {
         return new ProductListResponse(createConvertedPriceProducts(monetaryUnit, products));
     }
 
-    public ProductListResponse findAll(final String monetaryUnit) {
+    public ProductListResponse findAll(@Nullable final String monetaryUnit) {
         List<Product> products = productRepository.findAll();
         return new ProductListResponse(createConvertedPriceProducts(monetaryUnit, products));
     }
 
-    private List<ProductResponse> createConvertedPriceProducts(final String monetaryUnit,
+    private List<ProductResponse> createConvertedPriceProducts(@Nullable final String monetaryUnit,
                                                                final List<Product> products) {
         List<ProductResponse> productResponses = new ArrayList<>();
         for (Product product : products) {
@@ -59,7 +63,7 @@ public class ProductService {
         return productResponses;
     }
 
-    public ProductResponse findProductById(final Long productId, final String monetaryUnit) {
+    public ProductResponse findProductById(final Long productId, @Nullable final String monetaryUnit) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(ProductNotFoundException::new);
         double convertedPrice = convertPriceKrwTo(monetaryUnit, product);
@@ -71,6 +75,19 @@ public class ProductService {
             return product.getPrice();
         }
         return exchangeRatesService.convertKrwTo(MonetaryUnit.valueOf(monetaryUnit), product.getPrice());
+    }
+
+    public ProductListResponse findAllByPriceOrderByName(final Long price) {
+        List<Product> products = productRepository.findAllByPriceOrderByNameDesc(price);
+        return ProductListResponse.from(products);
+    }
+
+    public ProductListResponse findAllByPriceAndName(final ProductRequest productRequest) {
+        List<Product> products = productRepository.findAllByPriceAndName(
+                productRequest.getPrice(),
+                productRequest.getName()
+        );
+        return ProductListResponse.from(products);
     }
 
 }

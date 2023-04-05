@@ -21,7 +21,7 @@ public class ExchangeRatesService {
         this.exchangeYamlRead = exchangeYamlRead;
     }
 
-    public double convertKrwTo(final MonetaryUnit monetaryUnit, final int value) {
+    public double convertKrwTo(final MonetaryUnit monetaryUnit, final Long value) {
         RestTemplate template = new RestTemplate();
         ResponseEntity<ExchangeRates> exchange = template.exchange(
                 String.format(EXCHANGE_URL, monetaryUnit.toString()),

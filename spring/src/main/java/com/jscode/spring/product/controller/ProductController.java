@@ -1,11 +1,10 @@
 package com.jscode.spring.product.controller;
 
-import com.jscode.spring.product.dto.NewProductRequest;
 import com.jscode.spring.product.dto.ProductListResponse;
+import com.jscode.spring.product.dto.ProductRequest;
 import com.jscode.spring.product.dto.ProductResponse;
 import com.jscode.spring.product.dto.ProductSaveResponse;
 import com.jscode.spring.product.service.ProductService;
-import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,36 +26,59 @@ public class ProductController {
         this.productService = productService;
     }
 
-    /**
-     * (연습문제 1 ) 상품 등록 api <br>
-     * (미션 1 ) 상품 등록 api (동일상품 등록시 실패)
-     */
     @PostMapping("/products")
-    public ProductSaveResponse saveProduct(@RequestBody final NewProductRequest newProductRequest) {
-        Long generatedId = productService.saveProduct(newProductRequest);
+    public ProductSaveResponse saveProduct(@RequestBody final ProductRequest productRequest) {
+        log.info("call saveProduct");
+        Long generatedId = productService.saveProduct(productRequest);
         return new ProductSaveResponse(generatedId);
     }
 
-    /**
-     * (연습문제 2 ) 상품 조회 api
-     */
     @GetMapping("/products/{productId}")
     public ProductResponse findProductById(@PathVariable final Long productId,
                                            @RequestParam @Nullable final String monetaryUnit) {
+        log.info("call findProductById");
         return productService.findProductById(productId, monetaryUnit);
     }
 
-    /**
-     * (연습문제 3 ) 전체 상품 조회 (미션) 상품 이름으로 상세조회하는 api <br>
-     * (미션 2 ) 상품 상세 조회 api
-     */
     @GetMapping("/products")
-    public ProductListResponse findProducts(@RequestParam @Nullable final String name,
-                                            @RequestParam @Nullable final String monetaryUnit) {
-        if (Objects.isNull(name)) {
-            return productService.findAll(monetaryUnit);
-        }
+    public ProductListResponse findProducts(@RequestParam @Nullable final String monetaryUnit) {
+        log.info("call findProducts");
+        return productService.findAll(monetaryUnit);
+    }
+
+    @GetMapping(value = "/products", params = "name")
+    public ProductListResponse findProductByQueryStringName(@RequestParam final String name,
+                                                            @RequestParam @Nullable final String monetaryUnit) {
+        log.info("call findProductByQueryStringName");
         return productService.findAllByName(name, monetaryUnit);
+    }
+
+    /**
+     * (미션1) 상품 상세 조회 구현
+     */
+    @GetMapping(value = "/products", params = "id")
+    public ProductResponse findProductByQueryStringId(@RequestParam final Long id,
+                                                      @RequestParam @Nullable final String monetaryUnit) {
+        log.info("call findProductByQueryStringId");
+        return productService.findProductById(id, monetaryUnit);
+    }
+
+    /**
+     * (미션2) 상품 조회 메소드 구현(가격)
+     */
+    @GetMapping(value = "/products", params = "price")
+    public ProductListResponse findAllProductByPriceOrderByName(@RequestParam final Long price) {
+        log.info("call findAllProductByPriceOrderByName");
+        return productService.findAllByPriceOrderByName(price);
+    }
+
+    /**
+     * (미션2) 상품 조회 메소드 구현(이름)
+     */
+    @GetMapping(value = "/products", params = {"name", "price"})
+    public ProductListResponse findAllByPriceAndName(final ProductRequest productRequest) {
+        log.info("call findAllByPriceAndName");
+        return productService.findAllByPriceAndName(productRequest);
     }
 
 }
