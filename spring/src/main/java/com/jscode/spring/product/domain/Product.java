@@ -1,12 +1,17 @@
 package com.jscode.spring.product.domain;
 
+import com.jscode.spring.store.domain.Store;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -24,12 +29,28 @@ public class Product {
     @Column
     private Long price;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
+
     protected Product() {
     }
 
-    public Product(final String name, final Long price) {
+    @Builder
+    public Product(final String name, final Long price, final Store store) {
         this.name = name;
         this.price = price;
+        this.store = store;
+    }
+
+    public static Product createProduct(final String name, final Long price, final Store store) {
+        Product product = Product.builder()
+                .name(name)
+                .price(price)
+                .store(store)
+                .build();
+        store.addProduct(product);
+        return product;
     }
 
     public void generateId(final Long id) {
@@ -42,6 +63,10 @@ public class Product {
 
     public boolean isSameName(final String name) {
         return this.name.equals(name);
+    }
+
+    public Long getStoreId() {
+        return store.getId();
     }
 
 }

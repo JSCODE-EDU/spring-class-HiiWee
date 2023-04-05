@@ -1,10 +1,15 @@
 package com.jscode.spring.product.controller;
 
-import com.jscode.spring.product.dto.ProductListResponse;
-import com.jscode.spring.product.dto.ProductRequest;
+import com.jscode.spring.config.ApiDocumentResponse;
+import com.jscode.spring.product.dto.ProductContentRequest;
 import com.jscode.spring.product.dto.ProductResponse;
+import com.jscode.spring.product.dto.ProductSaveRequest;
 import com.jscode.spring.product.dto.ProductSaveResponse;
+import com.jscode.spring.product.dto.ProductsResponse;
 import com.jscode.spring.product.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
+@Tag(name = "Product Controller", description = "상품 관련 컨트롤러")
 @RestController
 @RequestMapping("/api")
 public class ProductController {
@@ -26,13 +32,17 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @ApiDocumentResponse
+    @Operation(summary = "saveProduct", description = "상품 등록")
     @PostMapping("/products")
-    public ProductSaveResponse saveProduct(@RequestBody final ProductRequest productRequest) {
+    public ProductSaveResponse saveProduct(@Valid @RequestBody final ProductSaveRequest productRequest) {
         log.info("call saveProduct");
         Long generatedId = productService.saveProduct(productRequest);
         return new ProductSaveResponse(generatedId);
     }
 
+    @ApiDocumentResponse
+    @Operation(summary = "findProductById", description = "상품 조회(가격 환율 변환 기능)")
     @GetMapping("/products/{productId}")
     public ProductResponse findProductById(@PathVariable final Long productId,
                                            @RequestParam @Nullable final String monetaryUnit) {
@@ -40,22 +50,25 @@ public class ProductController {
         return productService.findProductById(productId, monetaryUnit);
     }
 
+    @ApiDocumentResponse
+    @Operation(summary = "findProducts", description = "전체 상품 조회(가격 환율 변환 기능)")
     @GetMapping("/products")
-    public ProductListResponse findProducts(@RequestParam @Nullable final String monetaryUnit) {
+    public ProductsResponse findProducts(@RequestParam @Nullable final String monetaryUnit) {
         log.info("call findProducts");
         return productService.findAll(monetaryUnit);
     }
 
+    @ApiDocumentResponse
+    @Operation(summary = "findProductByQueryStringName", description = "이름에 대한 상품 조회(가격 환율 변환 가능")
     @GetMapping(value = "/products", params = "name")
-    public ProductListResponse findProductByQueryStringName(@RequestParam final String name,
-                                                            @RequestParam @Nullable final String monetaryUnit) {
+    public ProductsResponse findProductByQueryStringName(@RequestParam final String name,
+                                                         @RequestParam @Nullable final String monetaryUnit) {
         log.info("call findProductByQueryStringName");
         return productService.findAllByName(name, monetaryUnit);
     }
 
-    /**
-     * (미션1) 상품 상세 조회 구현
-     */
+    @ApiDocumentResponse
+    @Operation(summary = "findProductByQueryStringId", description = "상품 조회(가격 환율 변환 기능)")
     @GetMapping(value = "/products", params = "id")
     public ProductResponse findProductByQueryStringId(@RequestParam final Long id,
                                                       @RequestParam @Nullable final String monetaryUnit) {
@@ -63,22 +76,30 @@ public class ProductController {
         return productService.findProductById(id, monetaryUnit);
     }
 
-    /**
-     * (미션2) 상품 조회 메소드 구현(가격)
-     */
+    @ApiDocumentResponse
+    @Operation(summary = "findAllProductByPriceOrderByName", description = "특정 가격에 대해 이름 기준 내림차순 정렬한 모든 상품 조회")
     @GetMapping(value = "/products", params = "price")
-    public ProductListResponse findAllProductByPriceOrderByName(@RequestParam final Long price) {
+    public ProductsResponse findAllProductByPriceOrderByName(@RequestParam final Long price) {
         log.info("call findAllProductByPriceOrderByName");
         return productService.findAllByPriceOrderByName(price);
     }
 
-    /**
-     * (미션2) 상품 조회 메소드 구현(이름)
-     */
+    @ApiDocumentResponse
+    @Operation(summary = "findAllByPriceAndName", description = "특정 가격, 이름에 대한 모든 상품 조회")
     @GetMapping(value = "/products", params = {"name", "price"})
-    public ProductListResponse findAllByPriceAndName(final ProductRequest productRequest) {
+    public ProductsResponse findAllByPriceAndName(@Valid final ProductContentRequest productContentRequest) {
         log.info("call findAllByPriceAndName");
-        return productService.findAllByPriceAndName(productRequest);
+        return productService.findAllByPriceAndName(productContentRequest);
+    }
+
+    /**
+     * 하나의 상점에 속하는 모든 상품 조회 api
+     */
+    @ApiDocumentResponse
+    @Operation(summary = "findAllByStoreId", description = "특정 상점에 대한 모든 상품 조회")
+    @GetMapping(value = "/products", params = "storeId")
+    public ProductsResponse findAllByStoreId(@RequestParam final Long storeId) {
+        return productService.findAllByStoreId(storeId);
     }
 
 }

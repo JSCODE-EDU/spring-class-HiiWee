@@ -23,50 +23,50 @@ class ProductRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        product1 = new Product("컴퓨터사인펜", 3000L);
-        product2 = new Product("컴퓨터", 3000000L);
-        product3 = new Product("모니터", 500000L);
-        product4 = new Product("키보드", 100000L);
+        product1 = new Product("컴퓨터사인펜", 3000L, null);
+        product2 = new Product("컴퓨터", 3000000L, null);
+        product3 = new Product("모니터", 500000L, null);
+        product4 = new Product("키보드", 100000L, null);
         productRepository.save(product1);
         productRepository.save(product2);
         productRepository.save(product3);
         productRepository.save(product4);
     }
 
-    @Test
     @DisplayName("특정 이름을 제외하는 모든 상품 조회")
+    @Test
     void findAllByNameExceptExcludeName() {
         List<Product> products = productRepository.findAllByNameExceptExcludeName("모니터");
 
         assertThat(products).containsOnly(product1, product2, product4);
     }
 
-    @Test
     @DisplayName("가장 가격이 비싼 상품 조회하기")
+    @Test
     void findProductsWithMaxPrice() {
         List<Product> products = productRepository.findAllWithMaxPrice();
 
         assertThat(products).containsOnly(product2);
     }
 
-    @Test
     @DisplayName("특정 이름을 포함하는 모든 상품 조회")
+    @Test
     void findAllByNameIsLike() {
         List<Product> products = productRepository.findAllByNameIsLikeNameFormat("컴%");
 
         assertThat(products).containsOnly(product1, product2);
     }
 
-    @Test
     @DisplayName("가장 가격이 저렴한 상품의 이름만 조회")
+    @Test
     void findNamesWithMinPrice() {
         List<String> productNames = productRepository.findNamesWithMinPrice();
 
         assertThat(productNames).containsOnly("컴퓨터사인펜");
     }
 
-    @Test
     @DisplayName("상품 가격의 평균 구하기")
+    @Test
     void findAveragePrice() {
         Long expectPrice = (product1.getPrice() + product2.getPrice() + product3.getPrice() + product4.getPrice()) / 4;
 
