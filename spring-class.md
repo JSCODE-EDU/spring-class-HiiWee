@@ -35,3 +35,46 @@
 ### ✅ 학습 및 과제 진행
 - [4회차 코드(pr)](https://github.com/JSCODE-EDU/spring-class-HiiWee/pull/3)
 - [4회차 블로그 정리 - [스터디] Controller, Service, Repository 구분하기(4회차)](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%84%B0%EB%94%94-controller-service-repository-%EA%B5%AC%EB%B6%84%ED%95%98%EA%B8%B04%ED%9A%8C%EC%B0%A8)
+
+<br>
+
+## 📌 [5회차] Spring Data JPA 세팅하기
+### ✅ 학습 목표
+- 관계형 데이터베이스의 기본 개념을 이해할 수 있다.
+- ORM의 역할을 이해할 수 있다.
+- 필요한 테이블에 대한 Entity를 작성할 수 있다.
+
+### ✅ 학습 및 과제 진행
+- [5회차 코드(pr)](https://github.com/JSCODE-EDU/spring-class-HiiWee/pull/4)
+- [5회차 블로그 정리 - [스터디] Spring Data JPA 세팅하기(5회차)](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%84%B0%EB%94%94-Spring-Data-JPA-%EC%84%B8%ED%8C%85%ED%95%98%EA%B8%B05%ED%9A%8C%EC%B0%A8)
+
+<br>
+
+## 📌 [6회차] Spring Data JPA
+### ✅ 학습 목표
+- Spring Data JPA를 이용해서 데이터베이스와 연동된 API를 만들 수 있다. 
+
+### ✅ 학습 및 과제 진행
+- [6회차 코드(pr)](https://github.com/JSCODE-EDU/spring-class-HiiWee/pull/5)
+- [6회차 블로그 정리 - [스터디] Spring Data JPA(6회차)](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%84%B0%EB%94%94-Spring-Data-JPA6%ED%9A%8C%EC%B0%A8)
+
+<br>
+
+## 📌 [7회차] 상점 도메인 추가 및 Swagger 설정
+### ✅ 학습 목표
+- 새로운 도메인 적용 및 연관관계 정의하기
+- Swagger 설정을 통해 api 문서 만들기
+
+### ✅ 학습 및 과제 진행
+- [7회차 코드(pr)](https://github.com/JSCODE-EDU/spring-class-HiiWee/pull/6)
+- [7회차 블로그 정리 - [스터디] 상점 도메인 추가 및 Swagger 설정(7회차)](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%84%B0%EB%94%94-%EC%83%81%EC%A0%90-%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%B6%94%EA%B0%80-%EB%B0%8F-swagger-%EC%84%A4%EC%A0%957%ED%9A%8C%EC%B0%A8)
+
+
+<br>
+
+## 📌 [8회차] 마침표
+### ✅ 학습 목표
+- 회고록 작성
+
+### ✅ 학습 및 과제 진행
+- [8회차 블로그 회고록 - [스터디] 마침표(8회차)](https://velog.io/@wpdlzhf159/%EC%8A%A4%ED%84%B0%EB%94%94-%EB%A7%88%EC%B9%A8%ED%91%9C8%ED%9A%8C%EC%B0%A8)
