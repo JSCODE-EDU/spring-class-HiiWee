@@ -1,3 +1,8 @@
+# spring-class-HiiWee
+스프링 입문 클래스 이호석(HiiWee) repository
+
+<br>
+
 ## 📌 [1회차] OT, Git & GitHub
 ### ✅ 배운 내용, 깨달은 점
 - 멘토님의 조언을 통해 내가 피드백 받을 수 있는 환경을 만들어 보는것이 좋다는 점을 배웠습니다.
